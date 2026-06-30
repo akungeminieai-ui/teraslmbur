@@ -1,0 +1,450 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==================== AUTH & RBAC ====================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String    // bcrypt hash
+  phone         String?
+  avatar        String?
+  isActive      Boolean   @default(true)
+  roleId        String
+  role          Role      @relation(fields: [roleId], references: [id])
+  refreshTokens RefreshToken[]
+  outletId      String?   // Multi-outlet ready
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Role {
+  id            String       @id @default(cuid())
+  name          String       @unique  // OWNER, CASHIER, KITCHEN, MANAGER, WAITER
+  description   String?
+  isSystem      Boolean      @default(false)
+  permissions   RolePermission[]
+  users         User[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Permission {
+  id            String       @id @default(cuid())
+  code          String       @unique  // 'products.create', 'orders.void'
+  module        String       // 'products', 'orders', 'inventory'
+  action        String       // 'create', 'read', 'update', 'delete', 'void'
+  description   String?
+  roles         RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  @@id([roleId, permissionId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// ==================== CATALOG ====================
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  icon      String?
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  outletId  String?
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  sku         String?   @unique
+  price       Decimal   @db.Decimal(12,2)
+  image       String?
+  isActive    Boolean   @default(true)
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  recipe      Recipe?
+  orderItems  OrderItem[]
+  outletId    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Unit {
+  id           String     @id @default(cuid())
+  name         String     @unique  // Gram, Kg, Liter, Ml, Piece, etc.
+  abbreviation String     @unique  // g, kg, L, ml, pcs
+  type         UnitType
+  ingredients  Ingredient[]
+}
+
+enum UnitType {
+  WEIGHT
+  VOLUME
+  COUNT
+  PACK
+}
+
+// ==================== RECIPE BOM ====================
+
+model Recipe {
+  id        String       @id @default(cuid())
+  productId String       @unique
+  product   Product      @relation(fields: [productId], references: [id])
+  items     RecipeItem[]
+  notes     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model RecipeItem {
+  id           String     @id @default(cuid())
+  recipeId     String
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  ingredientId String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  quantity     Decimal    @db.Decimal(12,4)
+  createdAt    DateTime   @default(now())
+}
+
+// ==================== INVENTORY ====================
+
+model Ingredient {
+  id             String          @id @default(cuid())
+  name           String
+  sku            String?         @unique
+  unitId         String
+  unit           Unit            @relation(fields: [unitId], references: [id])
+  currentStock   Decimal         @db.Decimal(12,4) @default(0)
+  minStock       Decimal         @db.Decimal(12,4) @default(0)
+  costPerUnit    Decimal         @db.Decimal(12,4) @default(0)
+  recipeItems    RecipeItem[]
+  inventoryLogs  InventoryLog[]
+  purchaseItems  PurchaseItem[]
+  outletId       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model InventoryLog {
+  id           String        @id @default(cuid())
+  ingredientId String
+  ingredient   Ingredient    @relation(fields: [ingredientId], references: [id])
+  type         InventoryLogType
+  quantity     Decimal       @db.Decimal(12,4)
+  reference    String?
+  userId       String
+  outletId     String?
+  createdAt    DateTime      @default(now())
+}
+
+enum InventoryLogType {
+  PURCHASE
+  SALE
+  ADJUSTMENT
+  WASTE
+  TRANSFER
+}
+
+model Supplier {
+  id        String     @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  address   String?
+  isActive  Boolean    @default(true)
+  purchases Purchase[]
+  outletId  String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Purchase {
+  id         String         @id @default(cuid())
+  code       String         @unique
+  supplierId String
+  supplier   Supplier       @relation(fields: [supplierId], references: [id])
+  items      PurchaseItem[]
+  total      Decimal        @db.Decimal(12,2)
+  status     PurchaseStatus @default(DRAFT)
+  notes      String?
+  userId     String
+  outletId   String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model PurchaseItem {
+  id           String     @id @default(cuid())
+  purchaseId   String
+  purchase     Purchase   @relation(fields: [purchaseId], references: [id])
+  ingredientId String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  quantity     Decimal    @db.Decimal(12,4)
+  unitPrice    Decimal    @db.Decimal(12,4)
+  total        Decimal    @db.Decimal(12,2)
+}
+
+enum PurchaseStatus {
+  DRAFT
+  ORDERED
+  RECEIVED
+  CANCELLED
+}
+
+// ==================== ORDERS ====================
+
+model Table {
+  id        String    @id @default(cuid())
+  number    Int
+  name      String?
+  capacity  Int       @default(4)
+  status    TableStatus @default(AVAILABLE)
+  section   String?
+  outletId  String?
+  orders    Order[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum TableStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  MAINTENANCE
+}
+
+model Order {
+  id           String        @id @default(cuid())
+  code         String        @unique
+  type         OrderType
+  status       OrderStatus   @default(DRAFT)
+  tableId      String?
+  table        Table?        @relation(fields: [tableId], references: [id])
+  customerId   String?
+  customer     Customer?     @relation(fields: [customerId], references: [id])
+  items        OrderItem[]
+  payments     Payment[]
+  tickets      KitchenTicket[]
+  subtotal     Decimal       @db.Decimal(12,2) @default(0)
+  discount     Decimal       @db.Decimal(12,2) @default(0)
+  tax          Decimal       @db.Decimal(12,2) @default(0)
+  total        Decimal       @db.Decimal(12,2) @default(0)
+  notes        String?
+  userId       String
+  outletId     String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+enum OrderType {
+  DINE_IN
+  TAKE_AWAY
+  DELIVERY
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  ON_DELIVERY
+  COMPLETED
+  CANCELLED
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Decimal  @db.Decimal(12,2)
+  subtotal  Decimal  @db.Decimal(12,2)
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+// ==================== KITCHEN ====================
+
+model KitchenTicket {
+  id        String              @id @default(cuid())
+  orderId   String
+  order     Order               @relation(fields: [orderId], references: [id])
+  status    KitchenTicketStatus @default(PENDING)
+  printer   PrinterTarget       @default(KITCHEN)
+  priority  Int                 @default(0)
+  startedAt DateTime?
+  completedAt DateTime?
+  outletId  String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+}
+
+enum KitchenTicketStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  VOIDED
+}
+
+enum PrinterTarget {
+  KITCHEN
+  BAR
+  RECEIPT
+}
+
+// ==================== FINANCE ====================
+
+model Payment {
+  id        String        @id @default(cuid())
+  orderId   String
+  order     Order         @relation(fields: [orderId], references: [id])
+  method    PaymentMethod
+  amount    Decimal       @db.Decimal(12,2)
+  reference String?
+  outletId  String?
+  createdAt DateTime      @default(now())
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+  E_WALLET
+  OTHER
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  category    String
+  description String
+  amount      Decimal  @db.Decimal(12,2)
+  date        DateTime
+  receipt     String?
+  userId      String
+  outletId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CashClosing {
+  id             String   @id @default(cuid())
+  date           DateTime
+  openingBalance Decimal  @db.Decimal(12,2)
+  totalSales     Decimal  @db.Decimal(12,2)
+  totalExpenses  Decimal  @db.Decimal(12,2)
+  closingBalance Decimal  @db.Decimal(12,2)
+  difference     Decimal  @db.Decimal(12,2) @default(0)
+  notes          String?
+  userId         String
+  outletId       String?
+  createdAt      DateTime @default(now())
+}
+
+// ==================== CUSTOMERS ====================
+
+model Customer {
+  id         String   @id @default(cuid())
+  name       String
+  phone      String?  @unique
+  email      String?
+  address    String?
+  points     Int      @default(0)
+  tier       String?
+  orders     Order[]
+  outletId   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// ==================== SYSTEM ====================
+
+model Printer {
+  id       String      @id @default(cuid())
+  name     String
+  type     PrinterTarget
+  ipAddress String?
+  port     Int?
+  isActive Boolean     @default(true)
+  outletId String?
+  createdAt DateTime   @default(now())
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  type      String
+  channel   NotificationChannel
+  title     String
+  body      String
+  metadata  Json?
+  isRead    Boolean             @default(false)
+  userId    String
+  createdAt DateTime            @default(now())
+}
+
+enum NotificationChannel {
+  WEBSOCKET
+  WHATSAPP
+  EMAIL
+  PUSH
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  metadata  Json?
+  userId    String
+  outletId  String?
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  group     String
+  outletId  String?
+  updatedAt DateTime @updatedAt
+}
+
+model Outlet {
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  phone     String?
+  timezone  String   @default("Africa/Cairo")
+  currency  String   @default("EGP")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@teras-lmbur/config",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.js",
+  "scripts": {
+    "lint": "echo 'no lint for config'"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
