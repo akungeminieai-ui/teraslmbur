@@ -1,12 +1,31 @@
 // ============================================================
-// Orders Types — Teras Lmbur OS
+// Orders & Shift Types — Teras Lmbur OS
 // ============================================================
 
-import type { OrderStatus, OrderType, TableStatus } from './enums';
+import type { OrderStatus, OrderType, TableStatus, ShiftStatus } from './enums';
 import type { Product } from './catalog';
 import type { Customer } from './customers';
 import type { Payment } from './finance';
 import type { KitchenTicket } from './kitchen';
+
+/** Cashier Shift Management */
+export interface Shift {
+  id: string;
+  outletId: string;
+  openedById: string;
+  closedById: string | null;
+  /** Decimal string */
+  openingCash: string;
+  /** Decimal string */
+  closingCash: string | null;
+  /** Decimal string */
+  expectedCash: string | null;
+  /** Decimal string */
+  difference: string | null;
+  openedAt: string;
+  closedAt: string | null;
+  status: ShiftStatus;
+}
 
 /** Restaurant table */
 export interface Table {
@@ -16,7 +35,6 @@ export interface Table {
   capacity: number;
   status: TableStatus;
   section: string | null;
-  outletId: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -31,6 +49,8 @@ export interface Order {
   table?: Table;
   customerId: string | null;
   customer?: Customer;
+  shiftId: string | null;
+  shift?: Shift;
   items: OrderItem[];
   payments?: Payment[];
   tickets?: KitchenTicket[];
@@ -39,12 +59,14 @@ export interface Order {
   /** Decimal string */
   discount: string;
   /** Decimal string */
+  serviceCharge: string;
+  /** Decimal string */
   tax: string;
   /** Decimal string */
   total: string;
   notes: string | null;
   userId: string;
-  outletId: string | null;
+  outletId: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -12,6 +12,7 @@
   "dependencies": {
     "@teras-lmbur/hooks": "workspace:*",
     "@teras-lmbur/types": "workspace:*",
+    "@teras-lmbur/ui": "workspace:*",
     "@teras-lmbur/utils": "workspace:*",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-avatar": "^1.1.3",

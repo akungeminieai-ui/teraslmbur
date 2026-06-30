@@ -11,6 +11,7 @@ const envSchema = z.object({
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
   ENABLE_MULTI_OUTLET: z.preprocess((val) => val === 'true', z.boolean()).default(false),
   DEFAULT_CURRENCY: z.string().default('EGP'),
+  REDIS_URL: z.string().url().default('redis://localhost:6379'),
 });
 
 export default () => {

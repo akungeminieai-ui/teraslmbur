@@ -2,7 +2,7 @@
 // Catalog Types — Teras Lmbur OS
 // ============================================================
 
-import type { UnitType } from './enums';
+import type { UnitType, ProductAvailability } from './enums';
 
 /** Product category */
 export interface Category {
@@ -12,7 +12,6 @@ export interface Category {
   icon: string | null;
   sortOrder: number;
   isActive: boolean;
-  outletId: string | null;
   productCount?: number;
   createdAt: string;
   updatedAt: string;
@@ -28,13 +27,73 @@ export interface Product {
   /** Decimal string — NEVER use float for money */
   price: string;
   image: string | null;
-  isActive: boolean;
+  availability: ProductAvailability;
   categoryId: string;
   category?: Category;
-  recipe?: Recipe;
-  outletId: string | null;
+  recipes?: Recipe[];
+  variants?: ProductVariant[];
+  modifiers?: ProductModifier[];
   createdAt: string;
   updatedAt: string;
+}
+
+/** Variant Group Template (e.g. Size, Temperature) */
+export interface VariantGroup {
+  id: string;
+  name: string;
+  options: VariantOption[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Individual Option inside Variant Group (e.g. Small, Medium) */
+export interface VariantOption {
+  id: string;
+  groupId: string;
+  name: string;
+  displayOrder: number;
+}
+
+/** Concrete product variant association mapping */
+export interface ProductVariant {
+  id: string;
+  productId: string;
+  optionId: string;
+  option?: VariantOption;
+  /** Decimal price adjustment (e.g. "+15.00") */
+  priceAdjustment: string;
+  sku: string | null;
+  isActive: boolean;
+}
+
+/** Modifier Group Template (e.g. Sugar level, Toppings) */
+export interface ModifierGroup {
+  id: string;
+  name: string;
+  isRequired: boolean;
+  minSelect: number;
+  maxSelect: number;
+  options: ModifierOption[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Option inside Modifier Group (e.g. Extra sugar, Less sugar) */
+export interface ModifierOption {
+  id: string;
+  groupId: string;
+  name: string;
+  /** Decimal price adjustment (e.g. "+5.00") */
+  priceAdjustment: string;
+  displayOrder: number;
+  isActive: boolean;
+}
+
+/** Junction relation linking product and modifier groups */
+export interface ProductModifier {
+  productId: string;
+  modifierGroupId: string;
+  group?: ModifierGroup;
 }
 
 /** Measurement unit */
@@ -45,10 +104,14 @@ export interface Unit {
   type: UnitType;
 }
 
-/** Recipe Bill of Materials for a product */
+/** Versioned Recipe Bill of Materials for a product */
 export interface Recipe {
   id: string;
   productId: string;
+  version: number;
+  effectiveFrom: string;
+  effectiveTo: string | null;
+  isActive: boolean;
   items: RecipeItem[];
   notes: string | null;
   /** Calculated total cost from ingredient BOM */
@@ -76,13 +139,9 @@ export interface Ingredient {
   sku: string | null;
   unitId: string;
   unit?: Unit;
-  /** Decimal string */
-  currentStock: string;
-  /** Decimal string — minimum before low-stock alert */
   minStock: string;
   /** Decimal string — cost per unit for HPP calculation */
   costPerUnit: string;
-  outletId: string | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -19,30 +19,22 @@ const variantStyles: Record<BadgeVariant, string> = {
 
 function getVariant(status: string): BadgeVariant {
   const map: Record<string, BadgeVariant> = {
-    // Order statuses
-    [OrderStatus.DRAFT]: 'default',
-    [OrderStatus.PENDING]: 'warning',
-    [OrderStatus.CONFIRMED]: 'info',
-    [OrderStatus.PREPARING]: 'brand',
-    [OrderStatus.READY]: 'success',
-    [OrderStatus.ON_DELIVERY]: 'info',
-    [OrderStatus.COMPLETED]: 'success',
-    [OrderStatus.CANCELLED]: 'danger',
-    // Kitchen ticket statuses
-    [KitchenTicketStatus.PENDING]: 'warning',
-    [KitchenTicketStatus.IN_PROGRESS]: 'brand',
-    [KitchenTicketStatus.COMPLETED]: 'success',
-    [KitchenTicketStatus.VOIDED]: 'danger',
-    // Table statuses
-    [TableStatus.AVAILABLE]: 'success',
-    [TableStatus.OCCUPIED]: 'brand',
-    [TableStatus.RESERVED]: 'warning',
-    [TableStatus.MAINTENANCE]: 'danger',
-    // Purchase statuses
-    [PurchaseStatus.DRAFT]: 'default',
-    [PurchaseStatus.ORDERED]: 'info',
-    [PurchaseStatus.RECEIVED]: 'success',
-    [PurchaseStatus.CANCELLED]: 'danger',
+    DRAFT: 'default',
+    PENDING: 'warning',
+    CONFIRMED: 'info',
+    PREPARING: 'brand',
+    READY: 'success',
+    ON_DELIVERY: 'info',
+    COMPLETED: 'success',
+    CANCELLED: 'danger',
+    IN_PROGRESS: 'brand',
+    VOIDED: 'danger',
+    AVAILABLE: 'success',
+    OCCUPIED: 'brand',
+    RESERVED: 'warning',
+    MAINTENANCE: 'danger',
+    ORDERED: 'info',
+    RECEIVED: 'success',
   };
 
   return map[status] ?? 'default';

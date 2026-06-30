@@ -1,19 +1,30 @@
 // ============================================================
-// Kitchen Types — Teras Lmbur OS
+// Kitchen & Printer Types — Teras Lmbur OS
 // ============================================================
 
-import type { KitchenTicketStatus, PrinterTarget } from './enums';
+import type { KitchenTicketStatus, PrinterType, ConnectionType } from './enums';
 
-/** Kitchen display ticket */
+/** Kitchen Station (e.g. Grill, Bar, Desserts) */
+export interface KitchenStation {
+  id: string;
+  outletId: string;
+  name: string;
+  code: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Kitchen display ticket routed to a specific station */
 export interface KitchenTicket {
   id: string;
   orderId: string;
+  stationId: string;
+  station?: KitchenStation;
   status: KitchenTicketStatus;
-  printer: PrinterTarget;
   priority: number;
   startedAt: string | null;
   completedAt: string | null;
-  outletId: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -21,11 +32,14 @@ export interface KitchenTicket {
 /** Physical/network printer device */
 export interface Printer {
   id: string;
+  outletId: string;
+  stationId: string | null;
+  station?: KitchenStation;
   name: string;
-  type: PrinterTarget;
+  type: PrinterType;
+  connectionType: ConnectionType;
   ipAddress: string | null;
-  port: number | null;
+  isDefault: boolean;
   isActive: boolean;
-  outletId: string | null;
   createdAt: string;
 }

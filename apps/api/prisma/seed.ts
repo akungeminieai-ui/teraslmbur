@@ -12,12 +12,13 @@ async function main() {
     update: {},
     create: {
       id: 'default-outlet',
+      code: 'TL-MAIN',
       name: 'Teras Lmbur — Main Branch',
       address: 'Cairo, Egypt',
       phone: '+201000000000',
       timezone: 'Africa/Cairo',
       currency: 'EGP',
-      isActive: true,
+      status: 'ACTIVE',
     },
   });
   console.log(`🏢 Seeded Outlet: ${outlet.name}`);

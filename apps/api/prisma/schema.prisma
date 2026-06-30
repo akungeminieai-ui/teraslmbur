@@ -7,40 +7,46 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// ==================== AUTH & RBAC ====================
+// ==================== SYSTEM GROUP ====================
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String         @id @default(cuid())
+  email         String         @unique
   name          String
-  password      String    // bcrypt hash
+  password      String         // bcrypt hash
   phone         String?
   avatar        String?
-  isActive      Boolean   @default(true)
+  isActive      Boolean        @default(true)
   roleId        String
-  role          Role      @relation(fields: [roleId], references: [id])
+  role          Role           @relation(fields: [roleId], references: [id])
   refreshTokens RefreshToken[]
-  outletId      String?   // Multi-outlet ready
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  outletId      String?        // Scoped to an outlet (null for global admin)
+  outlet        Outlet?        @relation(fields: [outletId], references: [id])
+  shiftsOpened  Shift[]        @relation("OpenedBy")
+  shiftsClosed  Shift[]        @relation("ClosedBy")
+  wastesCreated Waste[]
+  auditLogs     AuditLog[]
+  mediaUploaded Media[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Role {
-  id            String       @id @default(cuid())
-  name          String       @unique  // OWNER, CASHIER, KITCHEN, MANAGER, WAITER
+  id            String           @id @default(cuid())
+  name          String           @unique
   description   String?
-  isSystem      Boolean      @default(false)
+  isSystem      Boolean          @default(false)
   permissions   RolePermission[]
   users         User[]
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 }
 
 model Permission {
-  id            String       @id @default(cuid())
-  code          String       @unique  // 'products.create', 'orders.void'
-  module        String       // 'products', 'orders', 'inventory'
-  action        String       // 'create', 'read', 'update', 'delete', 'void'
+  id            String           @id @default(cuid())
+  code          String           @unique // e.g. 'orders.void', 'inventory.adjust'
+  module        String
+  action        String
   description   String?
   roles         RolePermission[]
 }
@@ -48,8 +54,8 @@ model Permission {
 model RolePermission {
   roleId       String
   permissionId String
-  role         Role       @relation(fields: [roleId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
   @@id([roleId, permissionId])
 }
 
@@ -57,12 +63,89 @@ model RefreshToken {
   id        String   @id @default(cuid())
   token     String   @unique
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
 
-// ==================== CATALOG ====================
+model Outlet {
+  id           String                 @id @default(cuid())
+  code         String                 @unique // e.g. 'CAI-01'
+  name         String
+  address      String?
+  phone        String?
+  email        String?
+  currency     String                 @default("EGP")
+  timezone     String                 @default("Africa/Cairo")
+  logoUrl      String?
+  status       OutletStatus           @default(ACTIVE)
+  users        User[]
+  shifts       Shift[]
+  stations     KitchenStation[]
+  printers     Printer[]
+  orders       Order[]
+  transactions InventoryTransaction[]
+  wastes       Waste[]
+  settings     Setting[]
+  expenses     Expense[]
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}
+
+enum OutletStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   // e.g. 'store_name', 'default_tax'
+  value     String
+  group     String   // e.g. 'general', 'finance', 'receipt'
+  outletId  String?
+  outlet    Outlet?  @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, outletId])
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g. 'multi-outlet', 'membership'
+  name        String
+  description String?
+  enabled     Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+}
+
+model Media {
+  id         String   @id @default(cuid())
+  fileName   String
+  fileUrl    String
+  mimeType   String
+  size       Int
+  uploadedBy String
+  uploader   User     @relation(fields: [uploadedBy], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // e.g. 'order.void', 'shift.close'
+  resource  String   // e.g. 'Order', 'Shift'
+  resourceId String
+  oldValue  Json?
+  newValue  Json?
+  ipAddress String?
+  userAgent String?
+  device    String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+// ==================== MASTER GROUP ====================
 
 model Category {
   id        String    @id @default(cuid())
@@ -71,36 +154,109 @@ model Category {
   icon      String?
   sortOrder Int       @default(0)
   isActive  Boolean   @default(true)
-  outletId  String?
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Product {
-  id          String    @id @default(cuid())
-  name        String
-  slug        String    @unique
-  description String?
-  sku         String?   @unique
-  price       Decimal   @db.Decimal(12,2)
-  image       String?
-  isActive    Boolean   @default(true)
-  categoryId  String
-  category    Category  @relation(fields: [categoryId], references: [id])
-  recipe      Recipe?
-  orderItems  OrderItem[]
-  outletId    String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String              @id @default(cuid())
+  name         String
+  slug         String              @unique
+  description  String?
+  sku          String?             @unique
+  price        Decimal             @db.Decimal(12,2)
+  image        String?
+  availability ProductAvailability @default(AVAILABLE)
+  categoryId   String
+  category     Category            @relation(fields: [categoryId], references: [id])
+  recipes      Recipe[]
+  variants     ProductVariant[]
+  modifiers    ProductModifier[]
+  orderItems   OrderItem[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
 }
 
+enum ProductAvailability {
+  AVAILABLE
+  UNAVAILABLE
+  OUT_OF_STOCK
+  DISCONTINUED
+}
+
+// ── Reusable Variant Templates ──
+model VariantGroup {
+  id           String          @id @default(cuid())
+  name         String          @unique // e.g. 'Size'
+  options      VariantOption[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+model VariantOption {
+  id             String           @id @default(cuid())
+  groupId        String
+  group          VariantGroup     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  name           String           // e.g. 'Small', 'Medium', 'Large'
+  displayOrder   Int              @default(0)
+  productVariants ProductVariant[]
+}
+
+// Mapping of specific product variants
+model ProductVariant {
+  id              String        @id @default(cuid())
+  productId       String
+  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  optionId        String
+  option          VariantOption @relation(fields: [optionId], references: [id])
+  priceAdjustment Decimal       @db.Decimal(12,2) @default(0.00)
+  sku             String?       @unique
+  isActive        Boolean       @default(true)
+
+  @@unique([productId, optionId])
+}
+
+// ── Reusable Modifier Templates ──
+model ModifierGroup {
+  id          String           @id @default(cuid())
+  name        String           @unique // e.g. 'Sugar Level', 'Toppings'
+  isRequired  Boolean          @default(false)
+  minSelect   Int              @default(0)
+  maxSelect   Int              @default(1)
+  options     ModifierOption[]
+  products    ProductModifier[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model ModifierOption {
+  id              String        @id @default(cuid())
+  groupId         String
+  group           ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  name            String        // e.g. 'No Sugar', 'Extra Shot'
+  priceAdjustment Decimal       @db.Decimal(12,2) @default(0.00)
+  displayOrder    Int           @default(0)
+  isActive        Boolean       @default(true)
+}
+
+model ProductModifier {
+  productId       String
+  modifierGroupId String
+  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  group           ModifierGroup @relation(fields: [modifierGroupId], references: [id], onDelete: Cascade)
+
+  @@id([productId, modifierGroupId])
+}
+
+// ── Ingredients & BOM ──
 model Unit {
-  id           String     @id @default(cuid())
-  name         String     @unique  // Gram, Kg, Liter, Ml, Piece, etc.
-  abbreviation String     @unique  // g, kg, L, ml, pcs
+  id           String                 @id @default(cuid())
+  name         String                 @unique // e.g. 'Kilogram'
+  abbreviation String                 @unique // e.g. 'kg'
   type         UnitType
   ingredients  Ingredient[]
+  transactions InventoryTransaction[]
 }
 
 enum UnitType {
@@ -110,126 +266,83 @@ enum UnitType {
   PACK
 }
 
-// ==================== RECIPE BOM ====================
+model Ingredient {
+  id           String                 @id @default(cuid())
+  name         String
+  sku          String?                @unique
+  unitId       String
+  unit         Unit                   @relation(fields: [unitId], references: [id])
+  minStock     Decimal                @db.Decimal(12,4) @default(0)
+  costPerUnit  Decimal                @db.Decimal(12,4) @default(0) // dynamic HPP reference
+  recipeItems  RecipeItem[]
+  transactions InventoryTransaction[]
+  wastes       Waste[]
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}
 
+// Versioned Recipe / BOM System
 model Recipe {
-  id        String       @id @default(cuid())
-  productId String       @unique
-  product   Product      @relation(fields: [productId], references: [id])
-  items     RecipeItem[]
-  notes     String?
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  id            String       @id @default(cuid())
+  productId     String
+  product       Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  version       Int          @default(1)
+  effectiveFrom DateTime     @default(now())
+  effectiveTo   DateTime?
+  isActive      Boolean      @default(true)
+  items         RecipeItem[]
+  notes         String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([productId, version])
 }
 
 model RecipeItem {
   id           String     @id @default(cuid())
   recipeId     String
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredientId String
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
   quantity     Decimal    @db.Decimal(12,4)
-  createdAt    DateTime   @default(now())
 }
 
-// ==================== INVENTORY ====================
+// ==================== OPERATIONS GROUP ====================
 
-model Ingredient {
-  id             String          @id @default(cuid())
-  name           String
-  sku            String?         @unique
-  unitId         String
-  unit           Unit            @relation(fields: [unitId], references: [id])
-  currentStock   Decimal         @db.Decimal(12,4) @default(0)
-  minStock       Decimal         @db.Decimal(12,4) @default(0)
-  costPerUnit    Decimal         @db.Decimal(12,4) @default(0)
-  recipeItems    RecipeItem[]
-  inventoryLogs  InventoryLog[]
-  purchaseItems  PurchaseItem[]
-  outletId       String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+model Shift {
+  id           String      @id @default(cuid())
+  outletId     String
+  outlet       Outlet      @relation(fields: [outletId], references: [id])
+  openedById   String
+  openedBy     User        @relation("OpenedBy", fields: [openedById], references: [id])
+  closedById   String?
+  closedBy     User?       @relation("ClosedBy", fields: [closedById], references: [id])
+  openingCash  Decimal     @db.Decimal(12,2)
+  closingCash  Decimal?    @db.Decimal(12,2)
+  expectedCash Decimal?    @db.Decimal(12,2)
+  difference   Decimal?    @db.Decimal(12,2)
+  openedAt     DateTime    @default(now())
+  closedAt     DateTime?
+  status       ShiftStatus @default(OPEN)
+  orders       Order[]
+  cashClosings CashClosing[]
 }
 
-model InventoryLog {
-  id           String        @id @default(cuid())
-  ingredientId String
-  ingredient   Ingredient    @relation(fields: [ingredientId], references: [id])
-  type         InventoryLogType
-  quantity     Decimal       @db.Decimal(12,4)
-  reference    String?
-  userId       String
-  outletId     String?
-  createdAt    DateTime      @default(now())
+enum ShiftStatus {
+  OPEN
+  CLOSED
 }
-
-enum InventoryLogType {
-  PURCHASE
-  SALE
-  ADJUSTMENT
-  WASTE
-  TRANSFER
-}
-
-model Supplier {
-  id        String     @id @default(cuid())
-  name      String
-  phone     String?
-  email     String?
-  address   String?
-  isActive  Boolean    @default(true)
-  purchases Purchase[]
-  outletId  String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
-model Purchase {
-  id         String         @id @default(cuid())
-  code       String         @unique
-  supplierId String
-  supplier   Supplier       @relation(fields: [supplierId], references: [id])
-  items      PurchaseItem[]
-  total      Decimal        @db.Decimal(12,2)
-  status     PurchaseStatus @default(DRAFT)
-  notes      String?
-  userId     String
-  outletId   String?
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-}
-
-model PurchaseItem {
-  id           String     @id @default(cuid())
-  purchaseId   String
-  purchase     Purchase   @relation(fields: [purchaseId], references: [id])
-  ingredientId String
-  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-  quantity     Decimal    @db.Decimal(12,4)
-  unitPrice    Decimal    @db.Decimal(12,4)
-  total        Decimal    @db.Decimal(12,2)
-}
-
-enum PurchaseStatus {
-  DRAFT
-  ORDERED
-  RECEIVED
-  CANCELLED
-}
-
-// ==================== ORDERS ====================
 
 model Table {
-  id        String    @id @default(cuid())
+  id        String      @id @default(cuid())
   number    Int
   name      String?
-  capacity  Int       @default(4)
+  capacity  Int         @default(4)
   status    TableStatus @default(AVAILABLE)
   section   String?
-  outletId  String?
   orders    Order[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 enum TableStatus {
@@ -240,26 +353,30 @@ enum TableStatus {
 }
 
 model Order {
-  id           String        @id @default(cuid())
-  code         String        @unique
-  type         OrderType
-  status       OrderStatus   @default(DRAFT)
-  tableId      String?
-  table        Table?        @relation(fields: [tableId], references: [id])
-  customerId   String?
-  customer     Customer?     @relation(fields: [customerId], references: [id])
-  items        OrderItem[]
-  payments     Payment[]
-  tickets      KitchenTicket[]
-  subtotal     Decimal       @db.Decimal(12,2) @default(0)
-  discount     Decimal       @db.Decimal(12,2) @default(0)
-  tax          Decimal       @db.Decimal(12,2) @default(0)
-  total        Decimal       @db.Decimal(12,2) @default(0)
-  notes        String?
-  userId       String
-  outletId     String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id             String          @id @default(cuid())
+  code           String          @unique // ORD-YYYYMMDD-XXXX
+  type           OrderType
+  status         OrderStatus     @default(DRAFT)
+  tableId        String?
+  table          Table?          @relation(fields: [tableId], references: [id])
+  customerId     String?
+  customer       Customer?       @relation(fields: [customerId], references: [id])
+  shiftId        String?
+  shift          Shift?          @relation(fields: [shiftId], references: [id])
+  items          OrderItem[]
+  payments       Payment[]
+  tickets        KitchenTicket[]
+  subtotal       Decimal         @db.Decimal(12,2)
+  discount       Decimal         @db.Decimal(12,2) @default(0)
+  serviceCharge  Decimal         @db.Decimal(12,2) @default(0)
+  tax            Decimal         @db.Decimal(12,2) @default(0)
+  total          Decimal         @db.Decimal(12,2)
+  notes          String?
+  userId         String
+  outletId       String
+  outlet         Outlet          @relation(fields: [outletId], references: [id])
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 enum OrderType {
@@ -282,7 +399,7 @@ enum OrderStatus {
 model OrderItem {
   id        String   @id @default(cuid())
   orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
   product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
@@ -292,18 +409,31 @@ model OrderItem {
   createdAt DateTime @default(now())
 }
 
-// ==================== KITCHEN ====================
+model KitchenStation {
+  id        String          @id @default(cuid())
+  outletId  String
+  outlet    Outlet          @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  name      String          // e.g. 'Grill', 'Bar'
+  code      String          // e.g. 'GRILL', 'BAR'
+  isActive  Boolean         @default(true)
+  printers  Printer[]
+  tickets   KitchenTicket[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([outletId, code])
+}
 
 model KitchenTicket {
   id        String              @id @default(cuid())
   orderId   String
-  order     Order               @relation(fields: [orderId], references: [id])
+  order     Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  stationId String
+  station   KitchenStation      @relation(fields: [stationId], references: [id])
   status    KitchenTicketStatus @default(PENDING)
-  printer   PrinterTarget       @default(KITCHEN)
   priority  Int                 @default(0)
   startedAt DateTime?
   completedAt DateTime?
-  outletId  String?
   createdAt DateTime            @default(now())
   updatedAt DateTime            @updatedAt
 }
@@ -315,31 +445,34 @@ enum KitchenTicketStatus {
   VOIDED
 }
 
-enum PrinterTarget {
-  KITCHEN
-  BAR
-  RECEIPT
+// ==================== FINANCE GROUP ====================
+
+model PaymentMethod {
+  id       String            @id @default(cuid())
+  name     String            @unique // e.g. 'Visa'
+  code     String            @unique // e.g. 'VISA'
+  type     PaymentMethodType
+  isActive Boolean           @default(true)
+  payments Payment[]
 }
 
-// ==================== FINANCE ====================
-
-model Payment {
-  id        String        @id @default(cuid())
-  orderId   String
-  order     Order         @relation(fields: [orderId], references: [id])
-  method    PaymentMethod
-  amount    Decimal       @db.Decimal(12,2)
-  reference String?
-  outletId  String?
-  createdAt DateTime      @default(now())
-}
-
-enum PaymentMethod {
+enum PaymentMethodType {
   CASH
   CARD
   TRANSFER
   E_WALLET
   OTHER
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  orderId         String
+  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  paymentMethodId String
+  method          PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  amount          Decimal       @db.Decimal(12,2)
+  reference       String?
+  createdAt       DateTime      @default(now())
 }
 
 model Expense {
@@ -348,103 +481,132 @@ model Expense {
   description String
   amount      Decimal  @db.Decimal(12,2)
   date        DateTime
-  receipt     String?
+  receiptUrl  String?
   userId      String
-  outletId    String?
+  outletId    String
+  outlet      Outlet   @relation(fields: [outletId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model CashClosing {
   id             String   @id @default(cuid())
-  date           DateTime
+  shiftId        String
+  shift          Shift    @relation(fields: [shiftId], references: [id])
   openingBalance Decimal  @db.Decimal(12,2)
   totalSales     Decimal  @db.Decimal(12,2)
   totalExpenses  Decimal  @db.Decimal(12,2)
   closingBalance Decimal  @db.Decimal(12,2)
   difference     Decimal  @db.Decimal(12,2) @default(0)
   notes          String?
-  userId         String
-  outletId       String?
   createdAt      DateTime @default(now())
 }
 
-// ==================== CUSTOMERS ====================
+model Tax {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  percentage Decimal  @db.Decimal(5,2) // e.g. 14.00
+  isActive   Boolean  @default(true)
+}
+
+model ServiceCharge {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  percentage Decimal  @db.Decimal(5,2) // e.g. 12.00
+  isActive   Boolean  @default(true)
+}
+
+// ── Transaction-Based Inventory Ledger ──
+model InventoryTransaction {
+  id             String                 @id @default(cuid())
+  ingredientId   String
+  ingredient     Ingredient             @relation(fields: [ingredientId], references: [id])
+  outletId       String
+  outlet         Outlet                 @relation(fields: [outletId], references: [id])
+  quantity       Decimal                @db.Decimal(12,4) // + for IN, - for OUT/WASTE
+  unitId         String
+  unit           Unit                   @relation(fields: [unitId], references: [id])
+  type           InventoryTxType
+  referenceType  String?                // e.g. 'ORDER', 'PURCHASE', 'WASTE'
+  referenceId    String?
+  notes          String?
+  createdAt      DateTime               @default(now())
+}
+
+enum InventoryTxType {
+  IN
+  OUT
+  ADJUSTMENT
+  WASTE
+  RETURN
+}
+
+model Waste {
+  id           String     @id @default(cuid())
+  ingredientId String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  outletId     String
+  outlet       Outlet     @relation(fields: [outletId], references: [id])
+  quantity     Decimal    @db.Decimal(12,4)
+  reason       String     // e.g. 'Spill', 'Expired'
+  costImpact   Decimal    @db.Decimal(12,2)
+  createdById  String
+  createdBy    User       @relation(fields: [createdById], references: [id])
+  createdAt    DateTime   @default(now())
+}
+
+// ==================== CUSTOMER GROUP ====================
 
 model Customer {
-  id         String   @id @default(cuid())
-  name       String
-  phone      String?  @unique
-  email      String?
-  address    String?
-  points     Int      @default(0)
-  tier       String?
-  orders     Order[]
-  outletId   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-// ==================== SYSTEM ====================
-
-model Printer {
-  id       String      @id @default(cuid())
-  name     String
-  type     PrinterTarget
-  ipAddress String?
-  port     Int?
-  isActive Boolean     @default(true)
-  outletId String?
-  createdAt DateTime   @default(now())
-}
-
-model Notification {
-  id        String              @id @default(cuid())
-  type      String
-  channel   NotificationChannel
-  title     String
-  body      String
-  metadata  Json?
-  isRead    Boolean             @default(false)
-  userId    String
-  createdAt DateTime            @default(now())
-}
-
-enum NotificationChannel {
-  WEBSOCKET
-  WHATSAPP
-  EMAIL
-  PUSH
-}
-
-model ActivityLog {
-  id        String   @id @default(cuid())
-  action    String
-  entity    String
-  entityId  String
-  metadata  Json?
-  userId    String
-  outletId  String?
-  createdAt DateTime @default(now())
-}
-
-model Setting {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     String
-  group     String
-  outletId  String?
-  updatedAt DateTime @updatedAt
-}
-
-model Outlet {
   id        String   @id @default(cuid())
   name      String
+  phone     String?  @unique
+  email     String?
   address   String?
-  phone     String?
-  timezone  String   @default("Africa/Cairo")
-  currency  String   @default("EGP")
-  isActive  Boolean  @default(true)
+  points    Int      @default(0)
+  tier      String?
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ==================== SYSTEM HARDWARE GROUP ====================
+
+model Printer {
+  id             String         @id @default(cuid())
+  outletId       String
+  outlet         Outlet         @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  stationId      String?
+  station        KitchenStation? @relation(fields: [stationId], references: [id])
+  name           String
+  type           PrinterType
+  connectionType ConnectionType
+  ipAddress      String?
+  isDefault      Boolean        @default(false)
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+}
+
+enum PrinterType {
+  KITCHEN
+  BAR
+  RECEIPT
+}
+
+enum ConnectionType {
+  NETWORK
+  USB
+  BLUETOOTH
+}
+
+// ==================== ANALYTICS GROUP ====================
+
+model DashboardWidget {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g. 'revenue-metric', 'low-stock-list'
+  name      String
+  type      String   // e.g. 'metric', 'chart', 'list'
+  layout    Json     // e.g. { "w": 4, "h": 2, "x": 0, "y": 0 }
+  isActive  Boolean  @default(true)
+  config    Json?    // custom configurations
 }

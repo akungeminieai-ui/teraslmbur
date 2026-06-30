@@ -56,15 +56,22 @@ export enum KitchenTicketStatus {
   VOIDED = 'VOIDED',
 }
 
-/** Printer routing targets */
-export enum PrinterTarget {
+/** Printer Type */
+export enum PrinterType {
   KITCHEN = 'KITCHEN',
   BAR = 'BAR',
   RECEIPT = 'RECEIPT',
 }
 
-/** Payment methods */
-export enum PaymentMethod {
+/** Printer connection interface */
+export enum ConnectionType {
+  NETWORK = 'NETWORK',
+  USB = 'USB',
+  BLUETOOTH = 'BLUETOOTH',
+}
+
+/** Payment method classification */
+export enum PaymentMethodType {
   CASH = 'CASH',
   CARD = 'CARD',
   TRANSFER = 'TRANSFER',
@@ -80,13 +87,13 @@ export enum PurchaseStatus {
   CANCELLED = 'CANCELLED',
 }
 
-/** Inventory log action types */
-export enum InventoryLogType {
-  PURCHASE = 'PURCHASE',
-  SALE = 'SALE',
+/** Inventory ledger transaction type */
+export enum InventoryTxType {
+  IN = 'IN',
+  OUT = 'OUT',
   ADJUSTMENT = 'ADJUSTMENT',
   WASTE = 'WASTE',
-  TRANSFER = 'TRANSFER',
+  RETURN = 'RETURN',
 }
 
 /** Ingredient unit classification */
@@ -112,4 +119,25 @@ export enum SystemRole {
   CASHIER = 'CASHIER',
   KITCHEN = 'KITCHEN',
   WAITER = 'WAITER',
+}
+
+/** Outlet status */
+export enum OutletStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  SUSPENDED = 'SUSPENDED',
+}
+
+/** Shift state */
+export enum ShiftStatus {
+  OPEN = 'OPEN',
+  CLOSED = 'CLOSED',
+}
+
+/** Product Availability State */
+export enum ProductAvailability {
+  AVAILABLE = 'AVAILABLE',
+  UNAVAILABLE = 'UNAVAILABLE',
+  OUT_OF_STOCK = 'OUT_OF_STOCK',
+  DISCONTINUED = 'DISCONTINUED',
 }

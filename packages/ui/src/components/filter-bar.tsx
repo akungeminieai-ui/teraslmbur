@@ -7,7 +7,7 @@ interface FilterOption {
   label: string;
 }
 
-interface FilterBarProps extends React.HTMLAttributes<HTMLDivElement> {
+interface FilterBarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   options: FilterOption[];
   selectedValue?: string;
   onChange: (value: string) => void;
