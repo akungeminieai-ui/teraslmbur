@@ -88,6 +88,7 @@ model Outlet {
   wastes       Waste[]
   settings     Setting[]
   expenses     Expense[]
+  sequences    Sequence[]
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
 }
@@ -108,6 +109,7 @@ model Setting {
   updatedAt DateTime @updatedAt
 
   @@unique([key, outletId])
+  @@index([outletId])
 }
 
 model FeatureFlag {
@@ -143,6 +145,8 @@ model AuditLog {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
 
 // ==================== MASTER GROUP ====================
@@ -377,6 +381,9 @@ model Order {
   outlet         Outlet          @relation(fields: [outletId], references: [id])
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+
+  @@index([outletId, createdAt])
+  @@index([shiftId])
 }
 
 enum OrderType {
@@ -531,6 +538,8 @@ model InventoryTransaction {
   referenceId    String?
   notes          String?
   createdAt      DateTime               @default(now())
+
+  @@index([outletId, ingredientId])
 }
 
 enum InventoryTxType {
@@ -609,4 +618,16 @@ model DashboardWidget {
   layout    Json     // e.g. { "w": 4, "h": 2, "x": 0, "y": 0 }
   isActive  Boolean  @default(true)
   config    Json?    // custom configurations
+}
+
+model Sequence {
+  id        String   @id @default(cuid())
+  key       String   // e.g. 'order', 'receipt', 'invoice', etc.
+  outletId  String
+  outlet    Outlet   @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  date      String   // 'YYYYMMDD'
+  current   Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@unique([key, outletId, date])
 }

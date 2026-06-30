@@ -5,6 +5,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/system/auth/auth.module';
 import { QueueModule } from './modules/system/queue/queue.module';
 import { AuditModule } from './modules/system/audit/audit.module';
+import { SequenceModule } from './modules/system/sequence/sequence.module';
+import { BusinessCalendarModule } from './modules/system/calendar/calendar.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -28,6 +30,8 @@ import configuration from './config/configuration';
     AuthModule,
     QueueModule,
     AuditModule,
+    SequenceModule,
+    BusinessCalendarModule,
   ],
 })
 export class AppModule {}

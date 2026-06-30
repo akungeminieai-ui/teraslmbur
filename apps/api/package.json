@@ -24,6 +24,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/bullmq": "^11.0.2",
+    "@nestjs/swagger": "^11.0.3",
     "bullmq": "^5.34.8",
     "@prisma/client": "^6.2.1",
     "@teras-lmbur/types": "workspace:*",
