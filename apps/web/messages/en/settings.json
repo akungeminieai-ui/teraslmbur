@@ -1,0 +1,21 @@
+{
+  "title": "ROS Operational Settings",
+  "groups": {
+    "general": "General Configuration",
+    "branding": "Branding Customizer & Themes",
+    "business": "Business Calendars Details",
+    "pos": "Point-of-Sale Configuration",
+    "kitchen": "Kitchen Screen Rules",
+    "inventory": "Inventory Options",
+    "finance": "Finance, Taxes & Charges",
+    "receipt": "Receipt Layout Slogans",
+    "notification": "Alerts & Notifications",
+    "security": "User Permissions Access",
+    "developer": "API & Infrastructure Keys",
+    "analytics": "Analytics Dashboard Settings"
+  },
+  "brandingEngine": {
+    "preview": "Real-time Branding Theme Preview",
+    "activeColors": "Color Properties Tokens Palette"
+  }
+}

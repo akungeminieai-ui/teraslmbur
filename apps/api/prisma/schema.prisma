@@ -71,8 +71,6 @@ model RefreshToken {
 model Outlet {
   id           String                 @id @default(cuid())
   code         String                 @unique // e.g. 'CAI-01'
-  name         String
-  address      String?
   phone        String?
   email        String?
   currency     String                 @default("EGP")
@@ -86,9 +84,10 @@ model Outlet {
   orders       Order[]
   transactions InventoryTransaction[]
   wastes       Waste[]
-  settings     Setting[]
+  settings     SettingValue[]
   expenses     Expense[]
   sequences    Sequence[]
+  translations OutletTranslation[]
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
 }
@@ -99,16 +98,44 @@ enum OutletStatus {
   SUSPENDED
 }
 
-model Setting {
-  id        String   @id @default(cuid())
-  key       String   // e.g. 'store_name', 'default_tax'
-  value     String
-  group     String   // e.g. 'general', 'finance', 'receipt'
-  outletId  String?
-  outlet    Outlet?  @relation(fields: [outletId], references: [id], onDelete: Cascade)
-  updatedAt DateTime @updatedAt
+model OutletTranslation {
+  id        String @id @default(cuid())
+  outletId  String
+  outlet    Outlet @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  locale    String // 'en', 'id', 'ar'
+  name      String
+  address   String?
 
-  @@unique([key, outletId])
+  @@unique([outletId, locale])
+}
+
+// ── Enterprise Configuration Registry ──
+
+model SettingDefinition {
+  id             String         @id @default(cuid())
+  key            String         @unique
+  group          String         // e.g. 'general', 'branding', 'business', 'pos', 'kitchen', 'inventory', 'finance', 'receipt', 'notification', 'security', 'developer', 'analytics'
+  label          String
+  description    String?
+  type           String         // 'string', 'number', 'boolean', 'json', 'color', 'currency', 'timezone', 'url', 'email', 'phone', 'image', 'password'
+  defaultValue   String?
+  validationRule String?        // regex or custom validation rule description
+  isPublic       Boolean        @default(true)
+  isEncrypted    Boolean        @default(false)
+  sortOrder      Int            @default(0)
+  values         SettingValue[]
+}
+
+model SettingValue {
+  id           String            @id @default(cuid())
+  outletId     String?
+  outlet       Outlet?           @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  definitionId String
+  definition   SettingDefinition @relation(fields: [definitionId], references: [id], onDelete: Cascade)
+  value        String
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([definitionId, outletId])
   @@index([outletId])
 }
 
@@ -152,34 +179,54 @@ model AuditLog {
 // ==================== MASTER GROUP ====================
 
 model Category {
-  id        String    @id @default(cuid())
-  name      String
-  slug      String    @unique
-  icon      String?
-  sortOrder Int       @default(0)
-  isActive  Boolean   @default(true)
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id           String                @id @default(cuid())
+  slug         String                @unique
+  icon         String?
+  sortOrder    Int                   @default(0)
+  isActive     Boolean               @default(true)
+  products     Product[]
+  translations CategoryTranslation[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+}
+
+model CategoryTranslation {
+  id         String   @id @default(cuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  locale     String
+  name       String
+
+  @@unique([categoryId, locale])
 }
 
 model Product {
-  id           String              @id @default(cuid())
-  name         String
-  slug         String              @unique
-  description  String?
-  sku          String?             @unique
-  price        Decimal             @db.Decimal(12,2)
+  id           String               @id @default(cuid())
+  slug         String               @unique
+  sku          String?              @unique
+  price        Decimal              @db.Decimal(12,2)
   image        String?
-  availability ProductAvailability @default(AVAILABLE)
+  availability ProductAvailability  @default(AVAILABLE)
   categoryId   String
-  category     Category            @relation(fields: [categoryId], references: [id])
+  category     Category             @relation(fields: [categoryId], references: [id])
   recipes      Recipe[]
   variants     ProductVariant[]
   modifiers    ProductModifier[]
   orderItems   OrderItem[]
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
+  translations ProductTranslation[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+model ProductTranslation {
+  id          String  @id @default(cuid())
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  locale      String
+  name        String
+  description String?
+
+  @@unique([productId, locale])
 }
 
 enum ProductAvailability {
@@ -191,20 +238,40 @@ enum ProductAvailability {
 
 // ── Reusable Variant Templates ──
 model VariantGroup {
-  id           String          @id @default(cuid())
-  name         String          @unique // e.g. 'Size'
+  id           String                    @id @default(cuid())
   options      VariantOption[]
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  translations VariantGroupTranslation[]
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+}
+
+model VariantGroupTranslation {
+  id             String       @id @default(cuid())
+  variantGroupId String
+  variantGroup   VariantGroup @relation(fields: [variantGroupId], references: [id], onDelete: Cascade)
+  locale         String
+  name           String
+
+  @@unique([variantGroupId, locale])
 }
 
 model VariantOption {
-  id             String           @id @default(cuid())
-  groupId        String
-  group          VariantGroup     @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  name           String           // e.g. 'Small', 'Medium', 'Large'
-  displayOrder   Int              @default(0)
+  id              String                     @id @default(cuid())
+  groupId         String
+  group           VariantGroup               @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  displayOrder    Int                        @default(0)
   productVariants ProductVariant[]
+  translations    VariantOptionTranslation[]
+}
+
+model VariantOptionTranslation {
+  id              String        @id @default(cuid())
+  variantOptionId String
+  variantOption   VariantOption @relation(fields: [variantOptionId], references: [id], onDelete: Cascade)
+  locale          String
+  name            String
+
+  @@unique([variantOptionId, locale])
 }
 
 // Mapping of specific product variants
@@ -223,25 +290,45 @@ model ProductVariant {
 
 // ── Reusable Modifier Templates ──
 model ModifierGroup {
-  id          String           @id @default(cuid())
-  name        String           @unique // e.g. 'Sugar Level', 'Toppings'
-  isRequired  Boolean          @default(false)
-  minSelect   Int              @default(0)
-  maxSelect   Int              @default(1)
-  options     ModifierOption[]
-  products    ProductModifier[]
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id           String                     @id @default(cuid())
+  isRequired   Boolean                    @default(false)
+  minSelect    Int                        @default(0)
+  maxSelect    Int                        @default(1)
+  options      ModifierOption[]
+  products     ProductModifier[]
+  translations ModifierGroupTranslation[]
+  createdAt    DateTime                   @default(now())
+  updatedAt    DateTime                   @updatedAt
+}
+
+model ModifierGroupTranslation {
+  id              String        @id @default(cuid())
+  modifierGroupId String
+  modifierGroup   ModifierGroup @relation(fields: [modifierGroupId], references: [id], onDelete: Cascade)
+  locale          String
+  name            String
+
+  @@unique([modifierGroupId, locale])
 }
 
 model ModifierOption {
-  id              String        @id @default(cuid())
+  id              String                      @id @default(cuid())
   groupId         String
-  group           ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  name            String        // e.g. 'No Sugar', 'Extra Shot'
-  priceAdjustment Decimal       @db.Decimal(12,2) @default(0.00)
-  displayOrder    Int           @default(0)
-  isActive        Boolean       @default(true)
+  group           ModifierGroup               @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  priceAdjustment Decimal                     @db.Decimal(12,2) @default(0.00)
+  displayOrder    Int                         @default(0)
+  isActive        Boolean                     @default(true)
+  translations    ModifierOptionTranslation[]
+}
+
+model ModifierOptionTranslation {
+  id               String         @id @default(cuid())
+  modifierOptionId String
+  modifierOption   ModifierOption @relation(fields: [modifierOptionId], references: [id], onDelete: Cascade)
+  locale           String
+  name             String
+
+  @@unique([modifierOptionId, locale])
 }
 
 model ProductModifier {
@@ -417,18 +504,28 @@ model OrderItem {
 }
 
 model KitchenStation {
-  id        String          @id @default(cuid())
-  outletId  String
-  outlet    Outlet          @relation(fields: [outletId], references: [id], onDelete: Cascade)
-  name      String          // e.g. 'Grill', 'Bar'
-  code      String          // e.g. 'GRILL', 'BAR'
-  isActive  Boolean         @default(true)
-  printers  Printer[]
-  tickets   KitchenTicket[]
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  id           String                      @id @default(cuid())
+  outletId     String
+  outlet       Outlet                      @relation(fields: [outletId], references: [id], onDelete: Cascade)
+  code         String                      // e.g. 'GRILL', 'BAR'
+  isActive     Boolean                     @default(true)
+  printers     Printer[]
+  tickets      KitchenTicket[]
+  translations KitchenStationTranslation[]
+  createdAt    DateTime                    @default(now())
+  updatedAt    DateTime                    @updatedAt
 
   @@unique([outletId, code])
+}
+
+model KitchenStationTranslation {
+  id               String         @id @default(cuid())
+  kitchenStationId String
+  kitchenStation   KitchenStation @relation(fields: [kitchenStationId], references: [id], onDelete: Cascade)
+  locale           String
+  name             String
+
+  @@unique([kitchenStationId, locale])
 }
 
 model KitchenTicket {
@@ -455,12 +552,22 @@ enum KitchenTicketStatus {
 // ==================== FINANCE GROUP ====================
 
 model PaymentMethod {
-  id       String            @id @default(cuid())
-  name     String            @unique // e.g. 'Visa'
-  code     String            @unique // e.g. 'VISA'
-  type     PaymentMethodType
-  isActive Boolean           @default(true)
-  payments Payment[]
+  id           String                     @id @default(cuid())
+  code         String                     @unique // e.g. 'VISA'
+  type         PaymentMethodType
+  isActive     Boolean                    @default(true)
+  payments     Payment[]
+  translations PaymentMethodTranslation[]
+}
+
+model PaymentMethodTranslation {
+  id              String        @id @default(cuid())
+  paymentMethodId String
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id], onDelete: Cascade)
+  locale          String
+  name            String
+
+  @@unique([paymentMethodId, locale])
 }
 
 enum PaymentMethodType {

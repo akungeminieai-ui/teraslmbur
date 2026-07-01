@@ -1,0 +1,21 @@
+{
+  "title": "Pengaturan Operasional ROS",
+  "groups": {
+    "general": "Konfigurasi Umum",
+    "branding": "Kustomisasi Merek & Tema",
+    "business": "Detail Kalender Bisnis",
+    "pos": "Konfigurasi Kasir (POS)",
+    "kitchen": "Aturan Layar Dapur",
+    "inventory": "Opsi Inventaris",
+    "finance": "Keuangan, Pajak & Biaya",
+    "receipt": "Slogan Tata Letak Struk",
+    "notification": "Peringatan & Pemberitahuan",
+    "security": "Akses Izin Pengguna",
+    "developer": "Kunci API & Infrastruktur",
+    "analytics": "Pengaturan Dasbor Analitik"
+  },
+  "brandingEngine": {
+    "preview": "Pratinjau Tema Merek Waktu Nyata",
+    "activeColors": "Palet Token Properti Warna"
+  }
+}

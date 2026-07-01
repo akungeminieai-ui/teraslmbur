@@ -1,0 +1,15 @@
+{
+  "title": "Kitchen Display Screen (KDS)",
+  "stations": {
+    "title": "Kitchen Stations",
+    "grill": "Grill Station",
+    "bar": "Beverage Bar"
+  },
+  "tickets": {
+    "pending": "Pending Prep",
+    "preparing": "In Cooking Process",
+    "completed": "Dish Ready",
+    "voided": "Voided Order"
+  },
+  "timer": "Prep Duration"
+}

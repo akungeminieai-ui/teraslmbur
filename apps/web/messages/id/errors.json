@@ -1,0 +1,7 @@
+{
+  "productNotFound": "Produk katalog yang diminta tidak dapat ditemukan dalam database.",
+  "invalidPassword": "Kredensial yang diberikan tidak cocok dengan hash sistem kami.",
+  "outletNotFound": "Cakupan outlet yang diminta tidak ditemukan atau tidak aktif.",
+  "insufficientPermission": "Peran Anda saat ini tidak memberikan hak istimewa untuk operasi ini.",
+  "genericError": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi nanti."
+}

@@ -1,0 +1,7 @@
+{
+  "required": "This field is required and cannot be empty.",
+  "invalidEmail": "Invalid email formatting. Must be a valid address domain.",
+  "minLength": "Minimum input character length is {min} characters.",
+  "numeric": "Input must be a valid numeric calculation decimal.",
+  "priceGreater": "Price must be a decimal value greater than 0."
+}

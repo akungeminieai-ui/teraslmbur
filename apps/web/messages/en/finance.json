@@ -1,0 +1,13 @@
+{
+  "title": "Finance & Cash Drawers",
+  "shiftManagement": "Register Cashier Shift Operations",
+  "cashClosing": "End of Shift Cash Closing",
+  "fields": {
+    "opening": "Opening Cash Ledger Balance",
+    "sales": "Aggregated Sales Volume",
+    "expenses": "Shift Expense Adjustments",
+    "expected": "Expected Cash Balance Drawer",
+    "actual": "Actual Drawer Cash Balance Counted",
+    "difference": "Variance or Cash Difference"
+  }
+}

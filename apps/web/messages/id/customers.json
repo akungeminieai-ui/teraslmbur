@@ -1,0 +1,11 @@
+{
+  "title": "Direktori Hubungan Pelanggan",
+  "add": "Tambah Profil",
+  "fields": {
+    "name": "Nama Lengkap Pelanggan",
+    "phone": "Kontak Telepon",
+    "email": "Alamat Email",
+    "points": "Saldo Poin Sistem Loyalitas",
+    "tier": "Tingkat Akun Keanggotaan"
+  }
+}

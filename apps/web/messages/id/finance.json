@@ -1,0 +1,13 @@
+{
+  "title": "Keuangan & Laci Kas",
+  "shiftManagement": "Daftarkan Operasi Shift Kasir",
+  "cashClosing": "Penutupan Kas Akhir Shift",
+  "fields": {
+    "opening": "Saldo Awal Laci Kas",
+    "sales": "Akumulasi Volume Penjualan",
+    "expenses": "Penyesuaian Pengeluaran Shift",
+    "expected": "Saldo Kas Laci yang Diharapkan",
+    "actual": "Saldo Kas Laci Sebenarnya yang Dihitung",
+    "difference": "Selisih atau Varian Kas"
+  }
+}

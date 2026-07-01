@@ -1,0 +1,17 @@
+{
+  "title": "Buku Besar Inventaris",
+  "stockLevel": "Stok Tersedia",
+  "minStock": "Batas Peringatan Stok",
+  "transactions": {
+    "title": "Buku Besar Audit Inventaris",
+    "in": "Stok Masuk (Pembelian/Isi Ulang)",
+    "out": "Stok Keluar (Penggunaan Penjualan)",
+    "waste": "Catatan Tumpahan atau Limbah",
+    "adjustment": "Koreksi Perhitungan Stok Manual"
+  },
+  "fields": {
+    "ingredient": "Nama Bahan Baku",
+    "sku": "Pengidentifikasi SKU",
+    "cost": "Biaya Referensi Unit"
+  }
+}

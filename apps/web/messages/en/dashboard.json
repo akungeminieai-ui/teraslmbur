@@ -1,0 +1,14 @@
+{
+  "title": "Operational Dashboard",
+  "welcome": "Welcome back, {name}",
+  "metrics": {
+    "sales": "Net Sales",
+    "orders": "Total Orders",
+    "activeTables": "Active Tables",
+    "lowStock": "Low Stock Items"
+  },
+  "sections": {
+    "recentOrders": "Recent Floor Orders",
+    "topProducts": "Popular Items Sold"
+  }
+}

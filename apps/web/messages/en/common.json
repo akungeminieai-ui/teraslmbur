@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Teras Lmbur OS",
+    "tagline": "Restaurant Management System"
+  },
+  "buttons": {
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add New",
+    "search": "Search",
+    "clear": "Clear Filters"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "orders": "Orders",
+    "kitchen": "Kitchen Display",
+    "inventory": "Inventory Ledger",
+    "products": "Products Catalog",
+    "categories": "Categories",
+    "tables": "Table Layouts",
+    "reports": "Analytical Reports",
+    "settings": "System Settings",
+    "users": "Team Members"
+  },
+  "loading": "Loading data...",
+  "emptyState": "No records found.",
+  "searchPlaceholder": "Search..."
+}

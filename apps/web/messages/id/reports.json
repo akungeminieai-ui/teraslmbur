@@ -1,0 +1,10 @@
+{
+  "title": "Analisis Kinerja Bisnis",
+  "salesReport": "Ringkasan Laporan Penjualan Harian",
+  "cogsReport": "Harga Pokok Penjualan & HPP",
+  "export": "Ekspor Laporan (Excel/PDF)",
+  "filters": {
+    "businessDate": "Filter berdasarkan Tanggal Bisnis",
+    "range": "Rentang Tanggal Kustom"
+  }
+}

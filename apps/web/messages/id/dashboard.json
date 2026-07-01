@@ -1,0 +1,14 @@
+{
+  "title": "Dasbor Operasional",
+  "welcome": "Selamat datang kembali, {name}",
+  "metrics": {
+    "sales": "Penjualan Bersih",
+    "orders": "Total Pesanan",
+    "activeTables": "Meja Aktif",
+    "lowStock": "Stok Menipis"
+  },
+  "sections": {
+    "recentOrders": "Pesanan Terbaru",
+    "topProducts": "Produk Terpopuler"
+  }
+}

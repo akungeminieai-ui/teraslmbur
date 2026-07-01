@@ -1,0 +1,25 @@
+{
+  "title": "Floor Orders",
+  "create": "New Order",
+  "details": "Order Detail Information",
+  "status": {
+    "draft": "Draft",
+    "pending": "Pending Payment",
+    "confirmed": "Confirmed",
+    "preparing": "Preparing",
+    "ready": "Ready to Serve",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "types": {
+    "dineIn": "Dine In",
+    "takeAway": "Take Away",
+    "delivery": "Delivery"
+  },
+  "fields": {
+    "code": "Order Reference",
+    "table": "Table Assignment",
+    "total": "Total Bill Amount",
+    "notes": "Kitchen Notes"
+  }
+}

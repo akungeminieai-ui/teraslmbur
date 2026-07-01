@@ -1,0 +1,22 @@
+{
+  "title": "Product Catalog",
+  "add": "Add Product",
+  "edit": "Edit Product",
+  "fields": {
+    "name": "Product Name",
+    "price": "Base Price",
+    "sku": "SKU Code",
+    "category": "Product Category",
+    "availability": "Availability Status"
+  },
+  "variants": {
+    "title": "Product Variants",
+    "group": "Variant Group",
+    "option": "Option Selection"
+  },
+  "modifiers": {
+    "title": "Modifier Groups",
+    "groupName": "Group Name",
+    "required": "Required Selection"
+  }
+}

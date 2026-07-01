@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Teras Lmbur OS",
+    "tagline": "Sistem Manajemen Restoran"
+  },
+  "buttons": {
+    "save": "Simpan Perubahan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Ubah",
+    "add": "Tambah Baru",
+    "search": "Cari",
+    "clear": "Hapus Filter"
+  },
+  "sidebar": {
+    "dashboard": "Dasbor",
+    "orders": "Pesanan",
+    "kitchen": "Tampilan Dapur",
+    "inventory": "Buku Besar Inventaris",
+    "products": "Katalog Produk",
+    "categories": "Kategori",
+    "tables": "Tata Letak Meja",
+    "reports": "Laporan Analisis",
+    "settings": "Pengaturan Sistem",
+    "users": "Anggota Tim"
+  },
+  "loading": "Memuat data...",
+  "emptyState": "Data tidak ditemukan.",
+  "searchPlaceholder": "Cari..."
+}

@@ -1,0 +1,7 @@
+{
+  "productNotFound": "Requested catalog product could not be located in database.",
+  "invalidPassword": "Provided credentials do not match stored system hashes.",
+  "outletNotFound": "The requested outlet scope was not found or is inactive.",
+  "insufficientPermission": "Your current role does not grant privileges for this operation.",
+  "genericError": "An unexpected error occurred. Please try again later."
+}

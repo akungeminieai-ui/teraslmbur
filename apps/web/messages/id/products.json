@@ -1,0 +1,22 @@
+{
+  "title": "Katalog Produk",
+  "add": "Tambah Produk",
+  "edit": "Ubah Produk",
+  "fields": {
+    "name": "Nama Produk",
+    "price": "Harga Dasar",
+    "sku": "Kode SKU",
+    "category": "Kategori Produk",
+    "availability": "Status Ketersediaan"
+  },
+  "variants": {
+    "title": "Varian Produk",
+    "group": "Grup Varian",
+    "option": "Pilihan Varian"
+  },
+  "modifiers": {
+    "title": "Grup Modifikator",
+    "groupName": "Nama Grup",
+    "required": "Pilihan Wajib"
+  }
+}

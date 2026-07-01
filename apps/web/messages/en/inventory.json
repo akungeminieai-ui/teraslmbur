@@ -1,0 +1,17 @@
+{
+  "title": "Inventory stock ledger",
+  "stockLevel": "Stock Available",
+  "minStock": "Warning Stock Limit",
+  "transactions": {
+    "title": "Inventory Audit Ledger",
+    "in": "Stock In (Purchase/Refill)",
+    "out": "Stock Out (Sale usage)",
+    "waste": "Spill or Waste Log",
+    "adjustment": "Manual Stock Count Fix"
+  },
+  "fields": {
+    "ingredient": "Ingredient Name",
+    "sku": "SKU Identifier",
+    "cost": "Unit Reference Cost"
+  }
+}

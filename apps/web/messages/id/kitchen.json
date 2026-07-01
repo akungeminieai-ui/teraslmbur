@@ -1,0 +1,15 @@
+{
+  "title": "Layar Tampilan Dapur (KDS)",
+  "stations": {
+    "title": "Stasiun Dapur",
+    "grill": "Stasiun Panggang",
+    "bar": "Bar Minuman"
+  },
+  "tickets": {
+    "pending": "Menunggu Persiapan",
+    "preparing": "Dalam Proses Memasak",
+    "completed": "Hidangan Siap",
+    "voided": "Pesanan Dibatalkan"
+  },
+  "timer": "Durasi Persiapan"
+}

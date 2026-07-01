@@ -7,12 +7,16 @@ Teras Lmbur OS is a production-ready, enterprise-grade Restaurant Management Sys
 ## 🚀 Key Architectural Features
 
 1. **Clean Architecture & DDD**: Grouped into five distinct business domains: `master`, `operations`, `finance`, `analytics`, and `system`.
-2. **PostgreSQL Concurrency-Safe Sequence Engine**: Custom numbering engine utilizing `SELECT ... FOR UPDATE` row locks to prevent duplicate order or invoice numbering under high checkout volume.
-3. **Operational Business Calendar**: Configurable start-hour offsets (defaulting to 6:00 AM) that map calendar timestamps correctly to store operational days.
-4. **Transaction-Based Inventory Ledger**: All ingredient stock updates are written as immutable ledger rows in the transaction history table to ensure audit trail integrity.
-5. **Normalised Variants & Modifiers**: Product options are managed through reusable templates (`VariantGroup`, `ModifierGroup`) to prevent database bloat.
-6. **BullMQ Background Queues**: Asynchronous execution for printing, notifications, and slow reporting routines.
-7. **Pino Structured Logging & RBAC**: Automated Audit logs and fine-grained role mapping checks.
+2. **Enterprise Translation Engine (v1.1)**: Database-driven translation tables (`ProductTranslation`, `CategoryTranslation`, etc.) with in-memory locale fallbacks, decoupling text from DB structures.
+3. **Enterprise Configuration Registry (v1.1)**: Metadata-driven system settings (`SettingDefinition` + `SettingValue`) supporting type validations and groups.
+4. **Dynamic Theme Token System (v1.1)**: Dynamic branding customization (logos, dimensions, typography, and theme token palettes) outputting native CSS variables directly to the UI.
+5. **Redis Caching Layer (v1.1)**: Global settings cache utilizing Redis to yield sub-millisecond lookups with active TTL invalidations.
+6. **Concurrency-Safe Sequence Engine (v1.0)**: Custom numbering engine utilizing `SELECT ... FOR UPDATE` row locks to prevent duplicate order or invoice numbering under high checkout volume.
+7. **Operational Business Calendar (v1.0)**: Configurable start-hour offsets (defaulting to 6:00 AM) that map calendar timestamps correctly to store operational days.
+8. **Transaction-Based Inventory Ledger**: All ingredient stock updates are written as immutable ledger rows in the transaction history table to ensure audit trail integrity.
+9. **Normalised Variants & Modifiers**: Product options are managed through reusable templates (`VariantGroup`, `ModifierGroup`) to prevent database bloat.
+10. **BullMQ Background Queues**: Asynchronous execution for printing, notifications, and slow reporting routines.
+11. **Pino Structured Logging & RBAC**: Automated Audit logs and fine-grained role mapping checks.
 
 ---
 

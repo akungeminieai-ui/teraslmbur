@@ -1,0 +1,11 @@
+{
+  "title": "Customer Relationship Directory",
+  "add": "Add Profile",
+  "fields": {
+    "name": "Customer Full Name",
+    "phone": "Phone Contact",
+    "email": "Email Address",
+    "points": "Loyalty System Points Balance",
+    "tier": "Membership Account Tier"
+  }
+}

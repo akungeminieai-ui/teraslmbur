@@ -1,0 +1,10 @@
+{
+  "title": "Business Performance Analytics",
+  "salesReport": "Daily Sales Report Summary",
+  "cogsReport": "Cost of Goods Sold & HPP",
+  "export": "Export Report (Excel/PDF)",
+  "filters": {
+    "businessDate": "Filter by Business Date",
+    "range": "Custom Date Range"
+  }
+}

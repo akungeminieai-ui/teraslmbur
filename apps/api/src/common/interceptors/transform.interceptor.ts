@@ -9,13 +9,12 @@ import { map } from 'rxjs/operators';
 import type { ApiResponse } from '@teras-lmbur/types';
 
 @Injectable()
-export class TransformInterceptor<T> implements NestInterceptor<T, ApiResponse<T>> {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponse<T>> {
+export class TransformInterceptor<T> implements NestInterceptor<T, any> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => ({
         success: true,
-        data,
-        timestamp: new Date().toISOString(),
+        data: data ?? {},
       }))
     );
   }

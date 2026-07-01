@@ -7,6 +7,9 @@ import { QueueModule } from './modules/system/queue/queue.module';
 import { AuditModule } from './modules/system/audit/audit.module';
 import { SequenceModule } from './modules/system/sequence/sequence.module';
 import { BusinessCalendarModule } from './modules/system/calendar/calendar.module';
+import { TranslationModule } from './modules/system/translation/translation.module';
+import { RedisModule } from './modules/system/redis/redis.module';
+import { SettingsModule } from './modules/system/settings/settings.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -32,6 +35,9 @@ import configuration from './config/configuration';
     AuditModule,
     SequenceModule,
     BusinessCalendarModule,
+    TranslationModule,
+    RedisModule,
+    SettingsModule,
   ],
 })
 export class AppModule {}

@@ -1,0 +1,25 @@
+{
+  "title": "Pesanan Lantai",
+  "create": "Pesanan Baru",
+  "details": "Rincian Informasi Pesanan",
+  "status": {
+    "draft": "Draf",
+    "pending": "Menunggu Pembayaran",
+    "confirmed": "Dikonfirmasi",
+    "preparing": "Menyiapkan",
+    "ready": "Siap Disajikan",
+    "completed": "Selesai",
+    "cancelled": "Dibatalkan"
+  },
+  "types": {
+    "dineIn": "Makan di Tempat",
+    "takeAway": "Bawa Pulang",
+    "delivery": "Pengiriman"
+  },
+  "fields": {
+    "code": "Referensi Pesanan",
+    "table": "Penempatan Meja",
+    "total": "Total Jumlah Tagihan",
+    "notes": "Catatan Dapur"
+  }
+}

@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class BusinessCalendarService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   /**
    * Translates a calendar timestamp into the corresponding operational Business Date.
@@ -18,19 +22,17 @@ export class BusinessCalendarService {
 
     // Fetch operational business day start setting if available
     if (outletId) {
-      const setting = await this.prisma.setting.findFirst({
-        where: {
-          key: 'business_day_start_hour',
-          outletId,
-        },
-      });
-
-      if (setting && setting.value) {
-        const parts = setting.value.split(':');
-        if (parts.length >= 2) {
-          startHour = parseInt(parts[0], 10);
-          startMinute = parseInt(parts[1], 10);
+      try {
+        const startVal = await this.settingsService.get('business_day_start_hour', outletId);
+        if (startVal) {
+          const parts = startVal.split(':');
+          if (parts.length >= 2) {
+            startHour = parseInt(parts[0], 10);
+            startMinute = parseInt(parts[1], 10);
+          }
         }
+      } catch (e) {
+        // Fallback to defaults
       }
     }
 

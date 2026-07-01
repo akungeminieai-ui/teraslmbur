@@ -1,0 +1,7 @@
+{
+  "required": "Kolom ini wajib diisi dan tidak boleh kosong.",
+  "invalidEmail": "Format email tidak valid. Harus berupa domain alamat yang valid.",
+  "minLength": "Panjang karakter masukan minimum adalah {min} karakter.",
+  "numeric": "Masukan harus berupa angka desimal perhitungan yang valid.",
+  "priceGreater": "Harga harus berupa nilai desimal yang lebih besar dari 0."
+}

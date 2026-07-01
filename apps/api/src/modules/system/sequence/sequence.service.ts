@@ -1,9 +1,13 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class SequenceService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly settingsService: SettingsService,
+  ) {}
 
   /**
    * Generates a concurrency-safe, gapless transaction-locked sequence number.
@@ -55,12 +59,12 @@ export class SequenceService {
       });
 
       // 2. Fetch format configuration from system settings
-      const formatSetting = await this.prisma.setting.findFirst({
-        where: {
-          key: `sequence_format_${key}`,
-          outletId,
-        },
-      });
+      let formatSettingVal = '';
+      try {
+        formatSettingVal = await this.settingsService.get(`sequence_format_${key}`, outletId);
+      } catch (e) {
+        // default settings fallback will trigger
+      }
 
       // Default formats based on keys
       let formatPattern = 'TL-{OUTLET}-{YYYYMMDD}-{0001}';
@@ -78,8 +82,8 @@ export class SequenceService {
         formatPattern = 'RES-{YYYYMMDD}-{0001}';
       }
 
-      if (formatSetting) {
-        formatPattern = formatSetting.value;
+      if (formatSettingVal) {
+        formatPattern = formatSettingVal;
       }
 
       // 3. Resolve template placeholders
