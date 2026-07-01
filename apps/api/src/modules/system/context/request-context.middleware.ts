@@ -36,13 +36,15 @@ export class RequestContextMiddleware implements NestMiddleware {
       const authHeader = req.headers.authorization;
       if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.split(' ')[1];
-        const payloadBase64 = token.split('.')[1];
-        if (payloadBase64) {
-          const payload = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
-          userId = payload.sub || payload.id;
-          outletId = payload.outletId;
-          tenantId = payload.tenantId || payload.outletId;
-          shiftId = payload.shiftId;
+        if (token) {
+          const payloadBase64 = token.split('.')[1];
+          if (payloadBase64) {
+            const payload = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
+            userId = payload.sub || payload.id;
+            outletId = payload.outletId;
+            tenantId = payload.tenantId || payload.outletId;
+            shiftId = payload.shiftId;
+          }
         }
       }
     } catch (e) {

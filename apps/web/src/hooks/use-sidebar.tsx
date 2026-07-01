@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 import { useLocalStorage } from '@teras-lmbur/hooks';
 import { SIDEBAR_KEY } from '@teras-lmbur/utils';
 

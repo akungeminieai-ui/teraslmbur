@@ -50,7 +50,16 @@ export default function ReportsPage() {
             <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-400 transition-all"
-                style={{ width: `${Math.random() * 40 + 50}%` }}
+                style={{
+                  width:
+                    report.title === 'Daily Sales'
+                      ? '75%'
+                      : report.title === 'Weekly Summary'
+                        ? '65%'
+                        : report.title === 'Monthly Revenue'
+                          ? '85%'
+                          : '70%',
+                }}
               />
             </div>
           </div>

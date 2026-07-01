@@ -48,7 +48,7 @@ export class SettingsService implements OnModuleInit {
       throw new BadRequestException(`Undefined configuration key: ${key}`);
     }
 
-    let valRecord = null;
+    let valRecord: any = null;
     if (outletId) {
       valRecord = await this.prisma.settingValue.findUnique({
         where: {
@@ -62,12 +62,10 @@ export class SettingsService implements OnModuleInit {
 
     // If outlet-specific value not found, check global value (outletId is null)
     if (!valRecord) {
-      valRecord = await this.prisma.settingValue.findUnique({
+      valRecord = await this.prisma.settingValue.findFirst({
         where: {
-          definitionId_outletId: {
-            definitionId: definition.id,
-            outletId: null,
-          },
+          definitionId: definition.id,
+          outletId: null,
         },
       });
     }
@@ -98,20 +96,27 @@ export class SettingsService implements OnModuleInit {
 
     // TODO: Apply optional validationRule regex checks here if definition.validationRule is configured
 
-    await this.prisma.settingValue.upsert({
+    const existing = await this.prisma.settingValue.findFirst({
       where: {
-        definitionId_outletId: {
-          definitionId: definition.id,
-          outletId: outletId || null,
-        },
-      },
-      update: { value },
-      create: {
         definitionId: definition.id,
         outletId: outletId || null,
-        value,
       },
     });
+
+    if (existing) {
+      await this.prisma.settingValue.update({
+        where: { id: existing.id },
+        data: { value },
+      });
+    } else {
+      await this.prisma.settingValue.create({
+        data: {
+          definitionId: definition.id,
+          outletId: outletId || null,
+          value,
+        },
+      });
+    }
 
     // Invalidate the cache
     const cacheKey = this.getCacheKey(key, outletId);

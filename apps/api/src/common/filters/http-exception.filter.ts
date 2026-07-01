@@ -6,7 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
-import type { ApiError } from '@teras-lmbur/types';
+
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {

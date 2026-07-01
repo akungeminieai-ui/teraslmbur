@@ -15,7 +15,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000',
+    origin: process.env['CORS_ORIGIN'] ?? 'http://localhost:3000',
     credentials: true,
   });
 
@@ -53,7 +53,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const port = process.env.API_PORT ? parseInt(process.env.API_PORT, 10) : 3001;
+  const port = process.env['API_PORT'] ? parseInt(process.env['API_PORT'], 10) : 3001;
   await app.listen(port);
 }
 bootstrap();

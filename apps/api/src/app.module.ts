@@ -25,16 +25,17 @@ import configuration from './config/configuration';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
+      envFilePath: ['.env', '../../.env'],
     }),
     // Structured Pino Logger module
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
-          process.env.NODE_ENV !== 'production'
+          process.env['NODE_ENV'] !== 'production'
             ? { target: 'pino-pretty', options: { colorize: true } }
             : undefined,
-        level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
-        customProps(req: any, res: any) {
+        level: process.env['NODE_ENV'] !== 'production' ? 'debug' : 'info',
+        customProps(_req: any, _res: any) {
           const store = RequestContextService.getStore();
           return {
             requestId: store?.requestId,

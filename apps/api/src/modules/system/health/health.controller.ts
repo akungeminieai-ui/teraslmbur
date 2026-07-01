@@ -22,7 +22,7 @@ export class HealthController {
     const status = {
       status: healthy ? 'UP' : 'DOWN',
       timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || 'development',
+      environment: process.env['NODE_ENV'] || 'development',
       version: '1.0.0',
       uptime: process.uptime(),
       details: {
@@ -61,8 +61,8 @@ export class HealthController {
   getVersion() {
     return {
       version: '1.0.0',
-      hash: process.env.COMMIT_SHA || 'dev-commit-hash',
-      environment: process.env.NODE_ENV || 'development',
+      hash: process.env['COMMIT_SHA'] || 'dev-commit-hash',
+      environment: process.env['NODE_ENV'] || 'development',
     };
   }
 

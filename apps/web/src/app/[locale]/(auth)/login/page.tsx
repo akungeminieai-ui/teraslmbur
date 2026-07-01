@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { AppButton } from '@teras-lmbur/ui';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { toast } from 'sonner';
 
 const loginFormSchema = z.object({
@@ -69,7 +69,6 @@ export default function LoginPage() {
               id="email"
               type="email"
               placeholder="owner@teraslmbur.com"
-              {...register('register' as any)} // fallback helper or direct register
               {...register('email')}
               className="mt-1 flex h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] transition-colors focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
             />

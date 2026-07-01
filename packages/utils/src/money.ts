@@ -98,7 +98,7 @@ export class Money {
     // Allocate remaining fraction cent-by-cent
     let i = 0;
     while (remainder > BigInt(0)) {
-      allocations[i] += BigInt(1);
+      allocations[i] = (allocations[i] ?? BigInt(0)) + BigInt(1);
       remainder -= BigInt(1);
       i = (i + 1) % allocations.length;
     }

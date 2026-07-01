@@ -26,9 +26,11 @@ export class BusinessCalendarService {
         const startVal = await this.settingsService.get('business_day_start_hour', outletId);
         if (startVal) {
           const parts = startVal.split(':');
-          if (parts.length >= 2) {
-            startHour = parseInt(parts[0], 10);
-            startMinute = parseInt(parts[1], 10);
+          const hStr = parts[0];
+          const mStr = parts[1];
+          if (hStr !== undefined && mStr !== undefined) {
+            startHour = parseInt(hStr, 10);
+            startMinute = parseInt(mStr, 10);
           }
         }
       } catch (e) {

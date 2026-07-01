@@ -2,6 +2,7 @@
   "extends": "@teras-lmbur/config/typescript/nest.json",
   "compilerOptions": {
     "baseUrl": "./",
+    "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"]
     }

@@ -1,12 +1,12 @@
 import { Controller, Post, Get, UseGuards, HttpCode, HttpStatus, Req, Body } from '@nestjs/common';
 import { AuthService } from '../application/auth.service';
-import { LoginDto, loginSchema } from '../application/dto/login.dto';
+import { loginSchema, type LoginDto } from '../application/dto/login.dto';
 import { ZodValidationPipe } from '@/common/pipes/zod-validation.pipe';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { RefreshTokenGuard } from '../infrastructure/guards/refresh-token.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { Public } from '@/common/decorators/public.decorator';
-import type { ApiResponse } from '@teras-lmbur/types';
+
 
 @Controller('auth')
 export class AuthController {

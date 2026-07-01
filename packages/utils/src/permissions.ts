@@ -52,6 +52,12 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<SystemRole, Permission[]> = {
     'tables.read', 'tables.update',
     'kitchen.read',
   ],
+  [SystemRole.CUSTOMER]: [
+    'products.read',
+    'categories.read',
+    'orders.create',
+    'orders.read',
+  ],
 };
 
 /** Check if a user has a specific permission */

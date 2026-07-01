@@ -154,7 +154,7 @@ async function main() {
     { code: 'analytics.read', module: 'analytics', action: 'read', description: 'View analytics dashboard' },
   ];
 
-  const seededPermissions = [];
+  const seededPermissions: any[] = [];
   for (const perm of permissionCodes) {
     const p = await prisma.permission.upsert({
       where: { code: perm.code },

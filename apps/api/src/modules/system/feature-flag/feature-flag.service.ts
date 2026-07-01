@@ -75,13 +75,13 @@ export class FeatureFlagService {
     // 5. Evaluate custom rules list (outlet & user permissions lists)
     if (flag.rules && typeof flag.rules === 'object') {
       const rules = flag.rules as Record<string, any>;
-      if (rules.outlets && Array.isArray(rules.outlets)) {
-        if (!context?.outletId || !rules.outlets.includes(context.outletId)) {
+      if (rules['outlets'] && Array.isArray(rules['outlets'])) {
+        if (!context?.outletId || !rules['outlets'].includes(context.outletId)) {
           return false;
         }
       }
-      if (rules.users && Array.isArray(rules.users)) {
-        if (!context?.userId || !rules.users.includes(context.userId)) {
+      if (rules['users'] && Array.isArray(rules['users'])) {
+        if (!context?.userId || !rules['users'].includes(context.userId)) {
           return false;
         }
       }

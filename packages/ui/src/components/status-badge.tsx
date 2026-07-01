@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cn } from '@teras-lmbur/utils';
-import { OrderStatus, KitchenTicketStatus, TableStatus, PurchaseStatus } from '@teras-lmbur/types';
+
 
 type BadgeVariant = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'brand';
 

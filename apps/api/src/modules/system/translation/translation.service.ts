@@ -1,9 +1,13 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class TranslationService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly redis: RedisService,
+  ) {}
 
   private getModel(entityType: string) {
     const maps: Record<string, any> = {
@@ -23,6 +27,10 @@ export class TranslationService {
       throw new BadRequestException(`Unsupported translation entity type: ${entityType}`);
     }
     return target;
+  }
+
+  private getCacheKey(entityType: string, entityId: string): string {
+    return `translation:${entityType.toLowerCase()}:${entityId}`;
   }
 
   /**
@@ -47,11 +55,35 @@ export class TranslationService {
     requestedLocale: string,
   ): Promise<T & { name: string; description?: string; address?: string }> {
     const { client, fk } = this.getModel(entityType);
+    const cacheKey = this.getCacheKey(entityType, entity.id);
 
-    // Fetch all translations for this entity to apply in-memory fallback chain
-    const translations = await client.findMany({
-      where: { [fk]: entity.id },
-    });
+    let translations: any[] = [];
+
+    // 1. Try reading from Redis Cache
+    try {
+      const cached = await this.redis.get(cacheKey);
+      if (cached !== null) {
+        translations = JSON.parse(cached);
+      }
+    } catch (e) {
+      console.warn('⚠️ Redis translation cache read error: ', e);
+    }
+
+    // 2. Cache Miss: Fetch from DB
+    if (translations.length === 0) {
+      translations = await client.findMany({
+        where: { [fk]: entity.id },
+      });
+
+      // 3. Cache the resolved translations in Redis
+      if (translations.length > 0) {
+        try {
+          await this.redis.set(cacheKey, JSON.stringify(translations), 3600); // 1 hour TTL
+        } catch (e) {
+          console.warn('⚠️ Redis translation cache write error: ', e);
+        }
+      }
+    }
 
     const findByLocale = (loc: string) => translations.find((t: any) => t.locale === loc);
 
@@ -97,7 +129,7 @@ export class TranslationService {
   ): Promise<any> {
     const { client, fk } = this.getModel(entityType);
     try {
-      return await client.create({
+      const result = await client.create({
         data: {
           [fk]: entityId,
           locale,
@@ -106,6 +138,12 @@ export class TranslationService {
           ...(data.address ? { address: data.address } : {}),
         },
       });
+
+      // Invalidate cache
+      const cacheKey = this.getCacheKey(entityType, entityId);
+      await this.redis.del(cacheKey).catch((e) => console.warn('⚠️ Redis cache invalidate error: ', e));
+
+      return result;
     } catch (e) {
       throw new BadRequestException(`Translation failed to create: ${String(e)}`);
     }
@@ -130,7 +168,7 @@ export class TranslationService {
       throw new NotFoundException(`Translation for locale '${locale}' not found`);
     }
 
-    return client.update({
+    const result = await client.update({
       where: { id: record.id },
       data: {
         ...(data.name ? { name: data.name } : {}),
@@ -138,6 +176,12 @@ export class TranslationService {
         ...(data.address !== undefined ? { address: data.address } : {}),
       },
     });
+
+    // Invalidate cache
+    const cacheKey = this.getCacheKey(entityType, entityId);
+    await this.redis.del(cacheKey).catch((e) => console.warn('⚠️ Redis cache invalidate error: ', e));
+
+    return result;
   }
 
   /**
@@ -154,8 +198,14 @@ export class TranslationService {
       throw new NotFoundException(`Translation for locale '${locale}' not found`);
     }
 
-    return client.delete({
+    const result = await client.delete({
       where: { id: record.id },
     });
+
+    // Invalidate cache
+    const cacheKey = this.getCacheKey(entityType, entityId);
+    await this.redis.del(cacheKey).catch((e) => console.warn('⚠️ Redis cache invalidate error: ', e));
+
+    return result;
   }
 }

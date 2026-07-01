@@ -101,7 +101,7 @@ export class SequenceService {
 
       // Match padding placeholders like {0001} or {000001}
       const paddingMatch = formatted.match(/\{([0]+1)\}/);
-      if (paddingMatch) {
+      if (paddingMatch && paddingMatch[1]) {
         const placeholder = paddingMatch[0]; // e.g. "{0001}"
         const padLength = paddingMatch[1].length; // e.g. 4
         const paddedValue = counter.toString().padStart(padLength, '0');

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { OrderStatus, KitchenTicketStatus, TableStatus, PurchaseStatus } from '@teras-lmbur/types';
+
 
 type BadgeVariant = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'brand';
 

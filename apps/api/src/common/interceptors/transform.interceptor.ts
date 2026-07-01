@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import type { ApiResponse } from '@teras-lmbur/types';
+
 
 @Injectable()
 export class TransformInterceptor<T> implements NestInterceptor<T, any> {
