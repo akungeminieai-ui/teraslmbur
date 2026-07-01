@@ -18,7 +18,8 @@ import { ConfigService } from '@nestjs/config';
     BullModule.registerQueue(
       { name: 'PrintQueue' },
       { name: 'NotificationQueue' },
-      { name: 'ReportQueue' }
+      { name: 'ReportQueue' },
+      { name: 'AnalyticsQueue' }
     ),
   ],
   exports: [BullModule],

@@ -140,12 +140,17 @@ model SettingValue {
 }
 
 model FeatureFlag {
-  id          String   @id @default(cuid())
-  key         String   @unique // e.g. 'multi-outlet', 'membership'
-  name        String
-  description String?
-  enabled     Boolean  @default(false)
-  updatedAt   DateTime @updatedAt
+  id                String    @id @default(cuid())
+  key               String    @unique // e.g. 'multi-outlet', 'membership'
+  name              String
+  description       String?
+  enabled           Boolean   @default(false)
+  rolloutPercentage Int       @default(100)
+  startDate         DateTime?
+  endDate           DateTime?
+  dependencies      String[]
+  rules             Json?
+  updatedAt         DateTime  @updatedAt
 }
 
 model Media {

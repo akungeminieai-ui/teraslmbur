@@ -6,3 +6,4 @@ export { isNonNullable, isDefined, isString, isNumber } from './guards';
 export { canTransition, getNextStatuses, isTerminalStatus } from './order-machine';
 export { hasPermission, hasAnyPermission, hasAllPermissions, DEFAULT_ROLE_PERMISSIONS } from './permissions';
 export { APP_NAME, PAGINATION_DEFAULTS, TOKEN_KEYS, THEME_KEY, SIDEBAR_KEY } from './constants';
+export { Money } from './money';
