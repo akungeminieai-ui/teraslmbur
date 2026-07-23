@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 3000",
+    "prebuild": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && pnpm --filter \"@teras-lmbur/ui\" build && pnpm --filter \"@teras-lmbur/hooks\" build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src/",
