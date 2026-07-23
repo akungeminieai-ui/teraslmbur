@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "pnpm --filter @teras-lmbur/api build",
+  "installCommand": "pnpm install",
+  "outputDirectory": "apps/api/dist"
+}
