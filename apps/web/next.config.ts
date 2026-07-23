@@ -3,7 +3,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   transpilePackages: [
@@ -12,11 +12,9 @@ const nextConfig: NextConfig = {
     '@teras-lmbur/hooks',
     '@teras-lmbur/types'
   ],
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        'next-intl/config': './src/i18n/request.ts'
-      }
+  turbopack: {
+    resolveAlias: {
+      'next-intl/config': './src/i18n/request.ts'
     }
   }
 };
