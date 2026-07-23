@@ -11,12 +11,7 @@ const nextConfig: NextConfig = {
     '@teras-lmbur/utils',
     '@teras-lmbur/hooks',
     '@teras-lmbur/types'
-  ],
-  turbopack: {
-    resolveAlias: {
-      'next-intl/config': './src/i18n/request.ts'
-    }
-  }
+  ]
 };
 
 export default withNextIntl(nextConfig);
