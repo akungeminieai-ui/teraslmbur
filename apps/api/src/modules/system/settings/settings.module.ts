@@ -4,9 +4,11 @@ import { ThemeService } from './theme.service';
 import { BrandingService } from './branding.service';
 import { CurrencyService } from './currency.service';
 import { TimezoneService } from './timezone.service';
+import { SettingsController } from './settings.controller';
 
 @Global()
 @Module({
+  controllers: [SettingsController],
   providers: [
     SettingsService,
     ThemeService,

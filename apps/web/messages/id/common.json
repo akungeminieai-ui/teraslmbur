@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Teras Lmbur OS",
+    "title": "Teras Lmbur",
     "tagline": "Sistem Manajemen Restoran"
   },
   "buttons": {
@@ -10,21 +10,69 @@
     "edit": "Ubah",
     "add": "Tambah Baru",
     "search": "Cari",
-    "clear": "Hapus Filter"
+    "clear": "Hapus Filter",
+    "deleteSelected": "Hapus Terpilih",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "print": "Cetak Struk",
+    "close": "Tutup Jendela"
   },
   "sidebar": {
     "dashboard": "Dasbor",
+    "pos": "Point of Sale",
     "orders": "Pesanan",
     "kitchen": "Tampilan Dapur",
     "inventory": "Buku Besar Inventaris",
     "products": "Katalog Produk",
     "categories": "Kategori",
+    "units": "Satuan Pengukuran",
+    "ingredients": "Bahan Baku",
+    "variants": "Varian",
+    "modifiers": "Modifikasi",
     "tables": "Tata Letak Meja",
     "reports": "Laporan Analisis",
+    "analytics": "Analitik",
+    "users": "Anggota Tim",
     "settings": "Pengaturan Sistem",
-    "users": "Anggota Tim"
+    "collapse": "Ciutkan",
+    "owner": "Pemilik",
+    "logout": "Keluar",
+    "notifications": "Notifikasi",
+    "language": "Bahasa"
+  },
+  "sections": {
+    "main": "Utama",
+    "management": "Manajemen",
+    "finance": "Keuangan",
+    "system": "Sistem"
+  },
+  "toasts": {
+    "success": {
+      "create": "✓ {entity} dibuat",
+      "update": "✓ {entity} diperbarui",
+      "delete": "✓ {entity} dihapus",
+      "duplicate": "✓ {entity} diduplikat"
+    },
+    "error": {
+      "save": "Gagal menyimpan {entity}. Silakan coba lagi.",
+      "delete": "Gagal menghapus {entity}. Silakan coba lagi.",
+      "generic": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi."
+    }
   },
   "loading": "Memuat data...",
   "emptyState": "Data tidak ditemukan.",
-  "searchPlaceholder": "Cari..."
+  "searchPlaceholder": "Cari...",
+  "optional": "Opsional",
+  "active": "Aktif",
+  "inactive": "Tidak Aktif",
+  "actions": "Aksi",
+  "allCategories": "Semua Kategori",
+  "allStatuses": "Semua Status",
+  "table": {
+    "selected": "dipilih",
+    "showing": "Menampilkan {count} dari {total} data",
+    "rows": "Baris",
+    "pageOf": "Halaman {current} dari {total}",
+    "selectUnit": "Pilih Satuan"
+  }
 }

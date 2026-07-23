@@ -2,11 +2,11 @@
 // Orders & Shift Types — Teras Lmbur OS
 // ============================================================
 
-import type { OrderStatus, OrderType, TableStatus, ShiftStatus } from './enums';
-import type { Product } from './catalog';
-import type { Customer } from './customers';
-import type { Payment } from './finance';
-import type { KitchenTicket } from './kitchen';
+import type { OrderStatus, OrderType, TableStatus, ShiftStatus } from './enums.js';
+import type { Product } from './catalog.js';
+import type { Customer } from './customers.js';
+import type { Payment } from './finance.js';
+import type { KitchenTicket } from './kitchen.js';
 
 /** Cashier Shift Management */
 export interface Shift {

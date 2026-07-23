@@ -1,21 +1,26 @@
 'use client';
 
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import type { ReactNode } from 'react';
+import * as React from 'react';
+import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
 
-interface ThemeProviderProps {
-  children: ReactNode;
-}
-
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
       defaultTheme="dark"
       enableSystem={false}
-      disableTransitionOnChange
+      storageKey="theme"
     >
       {children}
     </NextThemesProvider>
   );
 }
+
+export function useTheme() {
+  const { theme, setTheme } = useNextTheme();
+  return {
+    theme: (theme || 'dark') as 'light' | 'dark',
+    setTheme: (newTheme: 'light' | 'dark') => setTheme(newTheme),
+  };
+}
+

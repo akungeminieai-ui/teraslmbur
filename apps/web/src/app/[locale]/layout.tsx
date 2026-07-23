@@ -19,8 +19,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Teras Lmbur OS',
-    template: '%s | Teras Lmbur OS',
+    default: 'Teras Lmbur',
+    template: '%s | Teras Lmbur',
   },
   description: 'Restaurant Management System — From single outlet to franchise platform',
   keywords: ['restaurant', 'management', 'pos', 'kitchen', 'inventory'],
@@ -44,7 +44,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="dark" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <AppProviders>{children}</AppProviders>

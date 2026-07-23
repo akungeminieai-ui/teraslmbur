@@ -14,12 +14,12 @@ export function useTranslationService() {
   const t = useTranslations();
   return {
     t,
-    translateEntity: <T extends { name: string; translations?: Array<{ locale: string; name: string; description?: string }> }>(
+    translateEntity: <T extends { name?: string; translations?: Array<{ locale: string; name: string; description?: string | null }> }>(
       entity: T,
       locale: string,
     ): T & { displayName: string; displayDescription?: string } => {
       if (!entity.translations || entity.translations.length === 0) {
-        return { ...entity, displayName: entity.name };
+        return { ...entity, displayName: entity.name || 'Untranslated' };
       }
       const matched =
         entity.translations.find((t) => t.locale === locale) ||
@@ -30,7 +30,7 @@ export function useTranslationService() {
       return {
         ...entity,
         displayName: matched.name,
-        displayDescription: matched.description,
+        displayDescription: matched.description || undefined,
       };
     },
   };

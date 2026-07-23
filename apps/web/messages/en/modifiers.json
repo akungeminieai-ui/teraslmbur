@@ -1,0 +1,42 @@
+{
+  "title": "Modifier Templates",
+  "entityName": "Modifier Group",
+  "description": "Manage reusable templates for product add-ons and toppings (e.g. Extra Toppings, Milk Choice).",
+  "add": "Add Modifier Group",
+  "edit": "Edit Modifier Group",
+  "delete": "Delete Modifier Group",
+  "deleteConfirm": "Are you sure you want to delete the modifier group \"{name}\"? This action cannot be undone.",
+  "deleteConfirmBulk": "Are you sure you want to delete {count} selected modifier groups?",
+  "noModifiers": "No Modifier Groups",
+  "noModifiersDesc": "Create your first Modifier Group to start building product modifiers.",
+  "details": "Details",
+  "history": "History",
+  "fields": {
+    "name": "Modifier Name",
+    "isRequired": "Required Option",
+    "minSelect": "Min Selection",
+    "maxSelect": "Max Selection",
+    "displayOrder": "Display Order",
+    "isActive": "Active Status",
+    "options": "Options",
+    "optionName": "Option Name",
+    "priceAdjustment": "Price Adjustment (EGP)",
+    "optionsSummary": "Options Summary"
+  },
+  "placeholders": {
+    "name": "e.g. Extra Toppings",
+    "minSelect": "e.g. 0",
+    "maxSelect": "e.g. 5",
+    "displayOrder": "e.g. 0",
+    "optionName": "e.g. Whipped Cream",
+    "priceAdjustment": "e.g. 8.00"
+  },
+  "validation": {
+    "name": "Group name is required",
+    "optionName": "Option name is required",
+    "priceAdjustment": "Price adjustment must be a positive number",
+    "minSelect": "Min selection must be a non-negative number",
+    "maxSelect": "Max selection must be greater than or equal to min selection",
+    "optionsCount": "At least one option is required"
+  }
+}

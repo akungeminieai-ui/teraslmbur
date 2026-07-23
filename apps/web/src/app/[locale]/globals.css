@@ -19,6 +19,19 @@
   --color-brand-800: #9a3412;
   --color-brand-900: #7c2d12;
 
+  /* ── Teras Lmbur OS Design System Theme Palette ── */
+  --color-background: var(--background);
+  --color-surface: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-body: var(--body);
+  --color-muted: var(--muted-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--destructive);
+
   /* ── Surface Colors (Dark First) ── */
   --color-surface-0: #09090b;
   --color-surface-50: #0c0c0e;
@@ -55,10 +68,10 @@
   --sidebar-expanded: 260px;
 
   /* ── Shadows ── */
-  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xs: var(--custom-shadow-xs);
+  --shadow-sm: var(--custom-shadow-sm);
+  --shadow-md: var(--custom-shadow-md);
+  --shadow-lg: var(--custom-shadow-lg);
   --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.15);
 }
 
@@ -86,31 +99,47 @@
   --sidebar-bg: #0c0c0e;
   --sidebar-border: #1f1f23;
   --header-bg: rgba(9, 9, 11, 0.8);
+
+  /* Shadows for Dark Mode */
+  --custom-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --custom-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --custom-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --custom-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
 }
 
 .light {
-  --background: #fafafa;
-  --foreground: #09090b;
-  --card: #ffffff;
-  --card-foreground: #09090b;
-  --popover: #ffffff;
-  --popover-foreground: #09090b;
-  --primary: #f97316;
-  --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
-  --destructive: #ef4444;
-  --destructive-foreground: #fafafa;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #f97316;
-  --sidebar-bg: #ffffff;
-  --sidebar-border: #e4e4e7;
-  --header-bg: rgba(250, 250, 250, 0.8);
+  --background: #F6F5F3;
+  --foreground: #18181B;
+  --card: #FFFFFF;
+  --card-foreground: #18181B;
+  --popover: #FFFFFF;
+  --popover-foreground: #18181B;
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F6F5F3;
+  --secondary-foreground: #18181B;
+  --muted: #F6F5F3;
+  --muted-foreground: #71717A;
+  --body: #52525B;
+  --accent: #F6F5F3;
+  --accent-foreground: #18181B;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #E7E5E4;
+  --input: #E7E5E4;
+  --ring: #F97316;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --sidebar-bg: #FFFFFF;
+  --sidebar-border: #E7E5E4;
+  --header-bg: rgba(246, 245, 243, 0.8);
+
+  /* Shadows for Light Mode (soft, subtle) */
+  --custom-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --custom-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --custom-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --custom-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
 }
 
 /* ── Base Styles ── */

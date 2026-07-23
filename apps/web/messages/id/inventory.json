@@ -1,7 +1,24 @@
 {
   "title": "Buku Besar Inventaris",
+  "description": "Pantau tingkat stok bahan baku, kelola inventaris, dan dapatkan notifikasi peringatan stok menipis secara real-time.",
   "stockLevel": "Stok Tersedia",
   "minStock": "Batas Peringatan Stok",
+  "adjustStock": "Koreksi Stok",
+  "adjustTitle": "Koreksi Stok Manual",
+  "adjustDesc": "Catat perubahan stok atau koreksi perhitungan untuk {name}",
+  "alerts": {
+    "success": "Koreksi stok berhasil disimpan!"
+  },
+  "types": {
+    "IN": "Tambah Stok (Isi Ulang)",
+    "OUT": "Kurangi Stok (Limbah/Hilang)",
+    "SET": "Atur Stok Manual (Perhitungan Saat Ini)"
+  },
+  "status": {
+    "critical": "Stok Kritis",
+    "warning": "Stok Menipis",
+    "ok": "Stok Sehat"
+  },
   "transactions": {
     "title": "Buku Besar Audit Inventaris",
     "in": "Stok Masuk (Pembelian/Isi Ulang)",
@@ -12,6 +29,14 @@
   "fields": {
     "ingredient": "Nama Bahan Baku",
     "sku": "Pengidentifikasi SKU",
-    "cost": "Biaya Referensi Unit"
+    "cost": "Biaya Referensi Unit",
+    "type": "Jenis Koreksi",
+    "quantity": "Jumlah",
+    "notes": "Catatan",
+    "todayUsage": "Penggunaan Hari Ini"
+  },
+  "placeholders": {
+    "quantity": "misal 5.00",
+    "notes": "Tentukan alasan (misal: perhitungan fisik, audit)"
   }
 }

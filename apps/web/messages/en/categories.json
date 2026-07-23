@@ -1,0 +1,32 @@
+{
+  "title": "Product Categories",
+  "entityName": "Category",
+  "description": "Manage hierarchical categories for organizing menu items.",
+  "add": "Add Category",
+  "edit": "Edit Category",
+  "delete": "Delete Category",
+  "deleteConfirm": "Are you sure you want to delete this category? Subcategories must be empty or deleted first.",
+  "fields": {
+    "name": "Category Name",
+    "slug": "Slug",
+    "icon": "Lucide Icon",
+    "sortOrder": "Sort Order",
+    "isActive": "Status",
+    "parentId": "Parent Category",
+    "productsCount": "Products",
+    "rootCategory": "Root Category"
+  },
+  "placeholders": {
+    "name": "e.g. Desserts",
+    "slug": "e.g. desserts (auto-generated if empty)",
+    "icon": "e.g. IceCream, Coffee, Pizza",
+    "sortOrder": "e.g. 0",
+    "parentId": "Select Parent (Optional)"
+  },
+  "validation": {
+    "name": "Name is required",
+    "translations": "Translation for at least one language is required"
+  },
+  "noCategories": "No categories found",
+  "noCategoriesDesc": "Start structuring your menu by adding your first category."
+}

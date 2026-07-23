@@ -1,0 +1,32 @@
+{
+  "title": "Kategori Produk",
+  "entityName": "Kategori",
+  "description": "Kelola kategori hierarkis untuk mengatur item menu Anda.",
+  "add": "Tambah Kategori",
+  "edit": "Ubah Kategori",
+  "delete": "Hapus Kategori",
+  "deleteConfirm": "Apakah Anda yakin ingin menghapus kategori ini? Subkategori harus kosong atau dihapus terlebih dahulu.",
+  "fields": {
+    "name": "Nama Kategori",
+    "slug": "Slug",
+    "icon": "Ikon Lucide",
+    "sortOrder": "Urutan Sortir",
+    "isActive": "Status",
+    "parentId": "Kategori Induk",
+    "productsCount": "Jumlah Produk",
+    "rootCategory": "Kategori Utama / Root"
+  },
+  "placeholders": {
+    "name": "mis. Makanan Penutup",
+    "slug": "mis. makanan-penutup (otomatis jika kosong)",
+    "icon": "mis. IceCream, Coffee, Pizza",
+    "sortOrder": "mis. 0",
+    "parentId": "Pilih Kategori Induk (Opsional)"
+  },
+  "validation": {
+    "name": "Nama wajib diisi",
+    "translations": "Terjemahan minimal untuk satu bahasa wajib diisi"
+  },
+  "noCategories": "Kategori tidak ditemukan",
+  "noCategoriesDesc": "Mulai menyusun menu Anda dengan menambahkan kategori pertama."
+}

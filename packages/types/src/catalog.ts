@@ -2,7 +2,7 @@
 // Catalog Types — Teras Lmbur OS
 // ============================================================
 
-import type { UnitType, ProductAvailability } from './enums';
+import type { UnitType, ProductAvailability } from './enums.js';
 
 /** Product category */
 export interface Category {
@@ -41,6 +41,8 @@ export interface Product {
 export interface VariantGroup {
   id: string;
   name: string;
+  displayOrder: number;
+  isActive: boolean;
   options: VariantOption[];
   createdAt: string;
   updatedAt: string;
@@ -73,6 +75,8 @@ export interface ModifierGroup {
   isRequired: boolean;
   minSelect: number;
   maxSelect: number;
+  displayOrder: number;
+  isActive: boolean;
   options: ModifierOption[];
   createdAt: string;
   updatedAt: string;

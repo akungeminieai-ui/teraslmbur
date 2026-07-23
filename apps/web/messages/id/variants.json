@@ -1,0 +1,32 @@
+{
+  "title": "Templat Varian",
+  "entityName": "Grup Varian",
+  "description": "Kelola templat yang dapat digunakan kembali untuk varian produk (misalnya Ukuran, Suhu).",
+  "add": "Tambah Grup Varian",
+  "edit": "Ubah Grup Varian",
+  "delete": "Hapus Grup Varian",
+  "deleteConfirm": "Apakah Anda yakin ingin menghapus grup varian \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+  "deleteConfirmBulk": "Apakah Anda yakin ingin menghapus {count} grup varian terpilih?",
+  "noVariants": "Tidak Ada Grup Varian",
+  "noVariantsDesc": "Buat Grup Varian pertama Anda untuk mulai membangun opsi produk.",
+  "details": "Detail",
+  "history": "Riwayat",
+  "fields": {
+    "name": "Nama Varian",
+    "displayOrder": "Urutan Tampilan",
+    "isActive": "Status Aktif",
+    "options": "Opsi",
+    "optionName": "Nama Opsi",
+    "optionsSummary": "Ringkasan Opsi"
+  },
+  "placeholders": {
+    "name": "misal: Ukuran",
+    "displayOrder": "misal: 0",
+    "optionName": "misal: Kecil"
+  },
+  "validation": {
+    "name": "Nama grup wajib diisi",
+    "optionName": "Nama opsi wajib diisi",
+    "optionsCount": "Minimal harus ada satu opsi"
+  }
+}

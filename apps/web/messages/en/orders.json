@@ -1,5 +1,7 @@
 {
   "title": "Floor Orders",
+  "subtitle": "Track and manage all cafe transaction orders.",
+  "searchPlaceholder": "Search order code or customer...",
   "create": "New Order",
   "details": "Order Detail Information",
   "status": {
@@ -9,7 +11,8 @@
     "preparing": "Preparing",
     "ready": "Ready to Serve",
     "completed": "Completed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "clear": "Clear"
   },
   "types": {
     "dineIn": "Dine In",
@@ -21,5 +24,16 @@
     "table": "Table Assignment",
     "total": "Total Bill Amount",
     "notes": "Kitchen Notes"
+  },
+  "allStatuses": "All Statuses",
+  "emptyStateTitle": "No Orders Found",
+  "emptyStateDesc": "No order records match your active search filters or date range.",
+  "newOrder": "Create New Order",
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "week": "This Week",
+    "month": "This Month",
+    "custom": "Custom Range"
   }
 }

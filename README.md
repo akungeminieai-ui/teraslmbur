@@ -17,6 +17,7 @@ Teras Lmbur OS is a production-ready, enterprise-grade Restaurant Management Sys
 9. **Normalised Variants & Modifiers**: Product options are managed through reusable templates (`VariantGroup`, `ModifierGroup`) to prevent database bloat.
 10. **BullMQ Background Queues**: Asynchronous execution for printing, notifications, and slow reporting routines.
 11. **Pino Structured Logging & RBAC**: Automated Audit logs and fine-grained role mapping checks.
+12. **Product Price History Audit Logs**: Immutable history logging capturing prior sellingPrice, HPP, actor, and reasons inside atomic database transactions.
 
 ---
 

@@ -2,8 +2,8 @@
 // Finance & Inventory Ledger Types — Teras Lmbur OS
 // ============================================================
 
-import type { PaymentMethodType, InventoryTxType } from './enums';
-import type { Unit } from './catalog';
+import type { PaymentMethodType, InventoryTxType } from './enums.js';
+import type { Unit } from './catalog.js';
 
 /** Currency codes — extensible */
 export type CurrencyCode = 'EGP' | 'USD' | 'EUR' | 'SAR' | (string & Record<never, never>);

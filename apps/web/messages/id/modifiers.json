@@ -1,0 +1,42 @@
+{
+  "title": "Templat Modifikasi",
+  "entityName": "Grup Modifikasi",
+  "description": "Kelola templat yang dapat digunakan kembali untuk tambahan produk dan topping (misalnya Topping Tambahan, Pilihan Susu).",
+  "add": "Tambah Grup Modifikasi",
+  "edit": "Ubah Grup Modifikasi",
+  "delete": "Hapus Grup Modifikasi",
+  "deleteConfirm": "Apakah Anda yakin ingin menghapus grup modifikasi \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+  "deleteConfirmBulk": "Apakah Anda yakin ingin menghapus {count} grup modifikasi terpilih?",
+  "noModifiers": "Tidak Ada Grup Modifikasi",
+  "noModifiersDesc": "Buat Grup Modifikasi pertama Anda untuk mulai membangun modifikasi produk.",
+  "details": "Detail",
+  "history": "Riwayat",
+  "fields": {
+    "name": "Nama Modifikasi",
+    "isRequired": "Pilihan Wajib",
+    "minSelect": "Pilihan Minimum",
+    "maxSelect": "Pilihan Maksimum",
+    "displayOrder": "Urutan Tampilan",
+    "isActive": "Status Aktif",
+    "options": "Opsi",
+    "optionName": "Nama Opsi",
+    "priceAdjustment": "Penyesuaian Harga (EGP)",
+    "optionsSummary": "Ringkasan Opsi"
+  },
+  "placeholders": {
+    "name": "misal: Topping Tambahan",
+    "minSelect": "misal: 0",
+    "maxSelect": "misal: 5",
+    "displayOrder": "misal: 0",
+    "optionName": "misal: Krim Kocok",
+    "priceAdjustment": "misal: 8.00"
+  },
+  "validation": {
+    "name": "Nama grup wajib diisi",
+    "optionName": "Nama opsi wajib diisi",
+    "priceAdjustment": "Penyesuaian harga harus berupa angka positif",
+    "minSelect": "Pilihan minimum harus bernilai non-negatif",
+    "maxSelect": "Pilihan maksimum harus lebih besar atau sama dengan pilihan minimum",
+    "optionsCount": "Minimal harus ada satu opsi"
+  }
+}

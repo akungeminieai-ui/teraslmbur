@@ -1,5 +1,7 @@
 {
   "title": "Pesanan Lantai",
+  "subtitle": "Lacak dan kelola semua transaksi pesanan kafe.",
+  "searchPlaceholder": "Cari kode pesanan atau pelanggan...",
   "create": "Pesanan Baru",
   "details": "Rincian Informasi Pesanan",
   "status": {
@@ -9,7 +11,8 @@
     "preparing": "Menyiapkan",
     "ready": "Siap Disajikan",
     "completed": "Selesai",
-    "cancelled": "Dibatalkan"
+    "cancelled": "Dibatalkan",
+    "clear": "Selesai (Clear)"
   },
   "types": {
     "dineIn": "Makan di Tempat",
@@ -21,5 +24,16 @@
     "table": "Penempatan Meja",
     "total": "Total Jumlah Tagihan",
     "notes": "Catatan Dapur"
+  },
+  "allStatuses": "Semua Status",
+  "emptyStateTitle": "Tidak Ada Pesanan Terlihat",
+  "emptyStateDesc": "Belum ada transaksi pesanan yang sesuai dengan filter atau rentang tanggal yang dipilih.",
+  "newOrder": "Buat Pesanan Baru",
+  "date": {
+    "today": "Hari Ini",
+    "yesterday": "Kemarin",
+    "week": "Minggu Ini",
+    "month": "Bulan Ini",
+    "custom": "Rentang Kustom"
   }
 }

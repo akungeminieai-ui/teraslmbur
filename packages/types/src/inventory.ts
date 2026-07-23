@@ -2,8 +2,8 @@
 // Inventory Types — Teras Lmbur OS
 // ============================================================
 
-import type { PurchaseStatus } from './enums';
-import type { Ingredient } from './catalog';
+import type { PurchaseStatus } from './enums.js';
+import type { Ingredient } from './catalog.js';
 
 /** Supplier / vendor */
 export interface Supplier {

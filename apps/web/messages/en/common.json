@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Teras Lmbur OS",
+    "title": "Teras Lmbur",
     "tagline": "Restaurant Management System"
   },
   "buttons": {
@@ -10,21 +10,69 @@
     "edit": "Edit",
     "add": "Add New",
     "search": "Search",
-    "clear": "Clear Filters"
+    "clear": "Clear Filters",
+    "deleteSelected": "Delete Selected",
+    "previous": "Previous",
+    "next": "Next",
+    "print": "Print",
+    "close": "Close"
   },
   "sidebar": {
     "dashboard": "Dashboard",
+    "pos": "Point of Sale",
     "orders": "Orders",
     "kitchen": "Kitchen Display",
     "inventory": "Inventory Ledger",
     "products": "Products Catalog",
     "categories": "Categories",
+    "units": "Measurement Units",
+    "ingredients": "Ingredients",
+    "variants": "Variants",
+    "modifiers": "Modifiers",
     "tables": "Table Layouts",
     "reports": "Analytical Reports",
+    "analytics": "Analytics",
+    "users": "Team Members",
     "settings": "System Settings",
-    "users": "Team Members"
+    "collapse": "Collapse",
+    "owner": "Owner",
+    "logout": "Logout",
+    "notifications": "Notifications",
+    "language": "Language"
+  },
+  "sections": {
+    "main": "Main",
+    "management": "Management",
+    "finance": "Finance",
+    "system": "System"
+  },
+  "toasts": {
+    "success": {
+      "create": "✓ {entity} created",
+      "update": "✓ {entity} updated",
+      "delete": "✓ {entity} deleted",
+      "duplicate": "✓ {entity} duplicated"
+    },
+    "error": {
+      "save": "Unable to save {entity}. Please try again.",
+      "delete": "Unable to delete {entity}. Please try again.",
+      "generic": "An unexpected error occurred. Please try again."
+    }
   },
   "loading": "Loading data...",
   "emptyState": "No records found.",
-  "searchPlaceholder": "Search..."
+  "searchPlaceholder": "Search...",
+  "optional": "Optional",
+  "active": "Active",
+  "inactive": "Inactive",
+  "actions": "Actions",
+  "allCategories": "All Categories",
+  "allStatuses": "All Statuses",
+  "table": {
+    "selected": "selected",
+    "showing": "Showing {count} of {total} entries",
+    "rows": "Rows",
+    "pageOf": "Page {current} of {total}",
+    "selectUnit": "Select Unit"
+  }
 }

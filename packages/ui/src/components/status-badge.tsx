@@ -26,6 +26,7 @@ function getVariant(status: string): BadgeVariant {
     READY: 'success',
     ON_DELIVERY: 'info',
     COMPLETED: 'success',
+    CLEAR: 'success',
     CANCELLED: 'danger',
     IN_PROGRESS: 'brand',
     VOIDED: 'danger',

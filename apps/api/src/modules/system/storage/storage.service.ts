@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { R2StorageProvider } from './providers/r2-storage.provider';
+import { LocalStorageProvider } from './providers/local-storage.provider';
 import { SettingsService } from '../settings/settings.service';
 import { StorageProvider } from './storage-provider.interface';
 
@@ -9,6 +10,7 @@ export class StorageService implements StorageProvider {
 
   constructor(
     private readonly r2Provider: R2StorageProvider,
+    private readonly localProvider: LocalStorageProvider,
     private readonly settingsService: SettingsService,
   ) {}
 
@@ -16,19 +18,18 @@ export class StorageService implements StorageProvider {
    * Resolves the active StorageProvider driver based on database configurations.
    */
   private async getProvider(): Promise<StorageProvider> {
-    let driver = 'R2';
+    let driver = 'LOCAL';
     try {
       driver = await this.settingsService.get('storage_provider_driver');
     } catch (e) {
       // Fallback
     }
 
-    if (driver === 'R2' || !driver) {
+    if (driver === 'R2') {
       return this.r2Provider;
     }
 
-    this.logger.warn(`⚠️ Configured storage driver '${driver}' not fully mapped. Defaulting to Cloudflare R2.`);
-    return this.r2Provider;
+    return this.localProvider;
   }
 
   async upload(key: string, file: Buffer, mimeType: string): Promise<string> {

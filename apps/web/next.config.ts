@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 
-console.log("NEXT CONFIG LOADED");
+
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 

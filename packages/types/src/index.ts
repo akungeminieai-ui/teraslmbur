@@ -6,14 +6,14 @@
 // Zero runtime dependencies. Types only.
 // ============================================================
 
-export * from './enums';
-export * from './auth';
-export * from './catalog';
-export * from './orders';
-export * from './kitchen';
-export * from './inventory';
-export * from './finance';
-export * from './customers';
-export * from './notifications';
-export * from './settings';
-export * from './common';
+export * from './enums.js';
+export * from './auth.js';
+export * from './catalog.js';
+export * from './orders.js';
+export * from './kitchen.js';
+export * from './inventory.js';
+export * from './finance.js';
+export * from './customers.js';
+export * from './notifications.js';
+export * from './settings.js';
+export * from './common.js';

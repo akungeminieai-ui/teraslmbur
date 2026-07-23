@@ -17,6 +17,7 @@ export enum OrderStatus {
   CANCELLED = 'CANCELLED',
   VOIDED = 'VOIDED',
   REFUNDED = 'REFUNDED',
+  CLEAR = 'CLEAR',
 }
 
 /** Customer fulfillment order type */
@@ -155,12 +156,13 @@ export const ORDER_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
   [OrderStatus.PAID]: [OrderStatus.QUEUED, OrderStatus.REFUNDED],
   [OrderStatus.QUEUED]: [OrderStatus.PREPARING, OrderStatus.VOIDED],
   [OrderStatus.PREPARING]: [OrderStatus.READY, OrderStatus.VOIDED],
-  [OrderStatus.READY]: [OrderStatus.SERVED],
-  [OrderStatus.SERVED]: [OrderStatus.COMPLETED, OrderStatus.REFUNDED],
+  [OrderStatus.READY]: [OrderStatus.SERVED, OrderStatus.CLEAR],
+  [OrderStatus.SERVED]: [OrderStatus.COMPLETED, OrderStatus.REFUNDED, OrderStatus.CLEAR],
   [OrderStatus.COMPLETED]: [],
   [OrderStatus.CANCELLED]: [],
   [OrderStatus.VOIDED]: [],
   [OrderStatus.REFUNDED]: [],
+  [OrderStatus.CLEAR]: [],
 };
 
 export enum UnitType {

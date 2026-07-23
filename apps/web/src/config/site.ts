@@ -12,8 +12,10 @@ export const navigationConfig: NavSection[] = [
     title: 'Main',
     items: [
       { title: 'Dashboard', href: '/dashboard', icon: 'LayoutDashboard' },
+      { title: 'POS', href: '/pos', icon: 'CreditCard', permission: 'sales.create' },
       { title: 'Orders', href: '/orders', icon: 'ShoppingCart', permission: 'orders.read' },
       { title: 'Kitchen', href: '/kitchen', icon: 'ChefHat', permission: 'kitchen.read' },
+      { title: 'QR Menu', href: '/settings/qr-menu', icon: 'QrCode', permission: 'settings.read' },
     ],
   },
   {
@@ -21,6 +23,10 @@ export const navigationConfig: NavSection[] = [
     items: [
       { title: 'Products', href: '/products', icon: 'Package', permission: 'products.read' },
       { title: 'Categories', href: '/categories', icon: 'Tags', permission: 'categories.read' },
+      { title: 'Variants', href: '/variants', icon: 'Tags', permission: 'variants.read' },
+      { title: 'Modifiers', href: '/modifiers', icon: 'Sliders', permission: 'modifiers.read' },
+      { title: 'Units', href: '/units', icon: 'Scale', permission: 'inventory.read' },
+      { title: 'Ingredients', href: '/ingredients', icon: 'Apple', permission: 'inventory.read' },
       { title: 'Tables', href: '/tables', icon: 'Armchair', permission: 'tables.read' },
       { title: 'Inventory', href: '/inventory', icon: 'Warehouse', permission: 'inventory.read' },
     ],

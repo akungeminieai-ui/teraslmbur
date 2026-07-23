@@ -1,4 +1,4 @@
-console.log("REQUEST CONFIG LOADED");
+
 import { getRequestConfig } from 'next-intl/server';
 import { routing } from './routing';
 import type { AbstractIntlMessages } from 'next-intl';
@@ -13,17 +13,25 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // Load and merge translation JSON files for the selected locale
   const files = [
     'common',
+    'pos',
     'dashboard',
     'products',
     'orders',
     'kitchen',
     'inventory',
     'reports',
+    'analytics',
     'settings',
     'finance',
     'customers',
     'errors',
     'validation',
+    'units',
+    'categories',
+    'variants',
+    'modifiers',
+    'ingredients',
+    'selfOrder',
   ];
 
   const messages: Record<string, unknown> = {};

@@ -1,0 +1,20 @@
+{
+  "title": "Analytics & BI",
+  "description": "Real-time business intelligence and operational performance tracking.",
+  "liveSync": "LIVE SYNC",
+  "refresh": "Refresh",
+  "hourlyDistribution": "Operating Hours Order Distribution",
+  "hourlySubtitle": "Today's order volume trend from 08:00 - 22:00",
+  "peakHourToday": "Peak Hour Today",
+  "recommendationTitle": "Kitchen Capacity Recommendation",
+  "recommendationDesc": "Peak rush hour detected at {peakHour}. Ensure main ingredient stock and kitchen staff are fully prepared before peak hours to maintain order efficiency above 90%.",
+  "salesChannelBreakdown": "Sales Channel Breakdown",
+  "noTransactionsToday": "No transactions recorded today.",
+  "topCategoryPerformance": "Top Category Performance",
+  "noCategorySalesToday": "No category sales recorded today.",
+  "itemsSold": "{count} items sold",
+  "ordersCount": "{count} orders",
+  "errorTitle": "Failed to Load Real-time Analytics",
+  "errorDesc": "Unable to connect to the backend analytics server.",
+  "retry": "Retry Connection"
+}

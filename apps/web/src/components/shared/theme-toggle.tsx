@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/providers/theme-provider';
 import { Sun, Moon } from 'lucide-react';
 import { useMounted } from '@teras-lmbur/hooks';
 

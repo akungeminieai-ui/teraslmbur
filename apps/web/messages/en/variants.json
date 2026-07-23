@@ -1,0 +1,32 @@
+{
+  "title": "Variant Templates",
+  "entityName": "Variant Group",
+  "description": "Manage reusable templates for product variants (e.g. Size, Temperature).",
+  "add": "Add Variant Group",
+  "edit": "Edit Variant Group",
+  "delete": "Delete Variant Group",
+  "deleteConfirm": "Are you sure you want to delete the variant group \"{name}\"? This action cannot be undone.",
+  "deleteConfirmBulk": "Are you sure you want to delete {count} selected variant groups?",
+  "noVariants": "No Variant Groups",
+  "noVariantsDesc": "Create your first Variant Group to start building product options.",
+  "details": "Details",
+  "history": "History",
+  "fields": {
+    "name": "Variant Name",
+    "displayOrder": "Display Order",
+    "isActive": "Active Status",
+    "options": "Options",
+    "optionName": "Option Name",
+    "optionsSummary": "Options Summary"
+  },
+  "placeholders": {
+    "name": "e.g. Size",
+    "displayOrder": "e.g. 0",
+    "optionName": "e.g. Small"
+  },
+  "validation": {
+    "name": "Group name is required",
+    "optionName": "Option name is required",
+    "optionsCount": "At least one option is required"
+  }
+}

@@ -1,7 +1,24 @@
 {
   "title": "Inventory stock ledger",
+  "description": "Track raw material stock levels, manage inventory ledgers, and monitor low-stock alerts in real-time.",
   "stockLevel": "Stock Available",
   "minStock": "Warning Stock Limit",
+  "adjustStock": "Stock Adjustment",
+  "adjustTitle": "Manual Stock Adjustment",
+  "adjustDesc": "Record stock changes or count corrections for {name}",
+  "alerts": {
+    "success": "Stock adjusted successfully!"
+  },
+  "types": {
+    "IN": "Add Stock (Refill)",
+    "OUT": "Reduce Stock (Waste/Loss)",
+    "SET": "Set Manual Stock (Current Count)"
+  },
+  "status": {
+    "critical": "Critical Stock",
+    "warning": "Low Stock",
+    "ok": "Stock Healthy"
+  },
   "transactions": {
     "title": "Inventory Audit Ledger",
     "in": "Stock In (Purchase/Refill)",
@@ -12,6 +29,14 @@
   "fields": {
     "ingredient": "Ingredient Name",
     "sku": "SKU Identifier",
-    "cost": "Unit Reference Cost"
+    "cost": "Unit Reference Cost",
+    "type": "Adjustment Type",
+    "quantity": "Quantity",
+    "notes": "Notes",
+    "todayUsage": "Today's Usage"
+  },
+  "placeholders": {
+    "quantity": "e.g. 5.00",
+    "notes": "Specify reason (e.g., manual count, audit)"
   }
 }

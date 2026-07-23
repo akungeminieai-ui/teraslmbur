@@ -2,7 +2,7 @@
 // Settings & System Types — Teras Lmbur OS
 // ============================================================
 
-import type { OutletStatus } from './enums';
+import type { OutletStatus } from './enums.js';
 
 /** System setting key-value */
 export interface Setting {

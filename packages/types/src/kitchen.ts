@@ -2,7 +2,7 @@
 // Kitchen & Printer Types — Teras Lmbur OS
 // ============================================================
 
-import type { KitchenTicketStatus, PrinterType, ConnectionType } from './enums';
+import type { KitchenTicketStatus, PrinterType, ConnectionType } from './enums.js';
 
 /** Kitchen Station (e.g. Grill, Bar, Desserts) */
 export interface KitchenStation {

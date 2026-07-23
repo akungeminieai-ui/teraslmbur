@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 import { ThemeProvider } from './theme-provider';
 import { QueryProvider } from './query-provider';
+import { AuthProvider } from './auth-provider';
 import { Toaster } from 'sonner';
 
 interface AppProvidersProps {
@@ -16,19 +17,21 @@ interface AppProvidersProps {
 export function AppProviders({ children }: AppProvidersProps) {
   return (
     <QueryProvider>
-      <ThemeProvider>
-        {children}
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: 'var(--card)',
-              color: 'var(--foreground)',
-              border: '1px solid var(--border)',
-            },
-          }}
-        />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: 'var(--card)',
+                color: 'var(--foreground)',
+                border: '1px solid var(--border)',
+              },
+            }}
+          />
+        </ThemeProvider>
+      </AuthProvider>
     </QueryProvider>
   );
 }

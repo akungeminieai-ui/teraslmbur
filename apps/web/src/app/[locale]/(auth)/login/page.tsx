@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -5,8 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { AppButton } from '@teras-lmbur/ui';
 import { useState } from 'react';
-import { useRouter } from '@/i18n/routing';
-import { toast } from 'sonner';
+import { useAppToast } from '@/hooks/use-app-toast';
+import { apiClient } from '@/lib/api-client';
+
+import { useAuth } from '@/providers/auth-provider';
 
 const loginFormSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -16,8 +19,9 @@ const loginFormSchema = z.object({
 type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 export default function LoginPage() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
+  const toastApp = useAppToast();
 
   const {
     register,
@@ -33,16 +37,15 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
-    // Simulate login for standalone demo
-    setTimeout(() => {
+    try {
+      const authData = await apiClient.post<any>('/auth/login', data);
+      toastApp.rawSuccess(`Welcome back, ${authData.user.name}!`);
+      login(authData);
+    } catch (err: any) {
+      toastApp.rawError(err.message || 'Invalid credentials. Hint: owner@teraslmbur.com / password123');
+    } finally {
       setIsLoading(false);
-      if (data.email === 'owner@teraslmbur.com' && data.password === 'password123') {
-        toast.success('Welcome back, Owner!');
-        router.push('/dashboard');
-      } else {
-        toast.error('Invalid credentials. Hint: owner@teraslmbur.com / password123');
-      }
-    }, 1000);
+    }
   };
 
   return (
@@ -55,7 +58,7 @@ export default function LoginPage() {
           Sign in to your account
         </h2>
         <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-          Teras Lmbur OS Restaurant Management
+          Teras Lmbur Restaurant Management
         </p>
       </div>
 

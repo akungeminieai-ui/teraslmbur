@@ -1,14 +1,30 @@
 {
-  "title": "Dasbor Operasional",
-  "welcome": "Selamat datang kembali, {name}",
+  "title": "Dasbor",
+  "welcome": "Selamat datang kembali! Berikut yang terjadi hari ini.",
+  "welcome1": "Selamat datang kembali! Semangat untuk hari ini, mari berikan pelayanan terbaik! ✨",
+  "welcome2": "Halo! Senang melihatmu lagi. Mari buat hari ini produktif dan sukses! 🚀",
+  "welcome3": "Hai! Teras Lmbur siap beraksi lagi bersamamu hari ini! ☕️",
+  "welcome4": "Halo Partner! Berikut ringkasan aktivitas seru kita hari ini.",
+  "welcome5": "Semangat pagi! Yuk pantau perkembangan Teras Lmbur hari ini. 📈",
   "metrics": {
-    "sales": "Penjualan Bersih",
-    "orders": "Total Pesanan",
-    "activeTables": "Meja Aktif",
-    "lowStock": "Stok Menipis"
+    "revenue": "Pendapatan",
+    "orders": "Pesanan",
+    "kitchenQueue": "Antrian Dapur",
+    "todaysProfit": "Laba Hari Ini",
+    "vsLastWeek": "vs minggu lalu",
+    "vsYesterday": "vs kemarin",
+    "avgWait": "rata-rata tunggu {minutes}m"
   },
   "sections": {
     "recentOrders": "Pesanan Terbaru",
-    "topProducts": "Produk Terpopuler"
+    "bestSellers": "Terlaris",
+    "lowStockAlert": "Peringatan Stok Menipis"
+  },
+  "labels": {
+    "viewAll": "Lihat semua",
+    "items": "{count} item",
+    "sold": "{count} terjual",
+    "minStock": "Min: {min} {unit}",
+    "timeAgo": "{time} lalu"
   }
 }

@@ -2,7 +2,7 @@
 // Notification Types — Teras Lmbur OS
 // ============================================================
 
-import type { NotificationChannel } from './enums';
+import type { NotificationChannel } from './enums.js';
 
 /** Notification entity */
 export interface Notification {

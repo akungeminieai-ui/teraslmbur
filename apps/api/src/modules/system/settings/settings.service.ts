@@ -145,12 +145,61 @@ export class SettingsService implements OnModuleInit {
   /**
    * Invalidates all cache entries for an outlet.
    */
-  async invalidateOutletCache(outletId?: string): Promise<void> {
-    const pattern = `setting:${outletId || 'global'}:*`;
-    try {
-      await this.redis.delPattern(pattern);
-    } catch (e) {
-      console.warn('⚠️ Redis pattern invalidation failed: ', e);
+  /**
+   * Fetches all settings definitions with current values for an outlet.
+   */
+  async getAll(outletId?: string) {
+    const definitions = await this.prisma.settingDefinition.findMany({
+      orderBy: { sortOrder: 'asc' },
+    });
+
+    const valRecords = await this.prisma.settingValue.findMany({
+      where: {
+        outletId: outletId || 'default-outlet',
+      },
+    });
+
+    const valMap = new Map(valRecords.map((v) => [v.definitionId, v.value]));
+
+    const settingsMap: Record<string, string> = {};
+    const settingsList = definitions.map((def) => {
+      const val = valMap.get(def.id) ?? def.defaultValue ?? '';
+      settingsMap[def.key] = val;
+      return {
+        id: def.id,
+        key: def.key,
+        group: def.group,
+        label: def.label,
+        description: def.description,
+        type: def.type,
+        value: val,
+        defaultValue: def.defaultValue,
+        isPublic: def.isPublic,
+      };
+    });
+
+    return {
+      settings: settingsMap,
+      definitions: settingsList,
+    };
+  }
+
+  /**
+   * Updates multiple setting values at once.
+   */
+  async updateMany(settingsRecord: Record<string, string>, outletId?: string) {
+    const targetOutlet = outletId || 'default-outlet';
+
+    for (const [key, value] of Object.entries(settingsRecord)) {
+      const definition = await this.prisma.settingDefinition.findUnique({
+        where: { key },
+      });
+
+      if (definition) {
+        await this.set(key, String(value), targetOutlet);
+      }
     }
+
+    return this.getAll(targetOutlet);
   }
 }

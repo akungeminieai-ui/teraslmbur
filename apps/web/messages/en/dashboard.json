@@ -1,14 +1,30 @@
 {
-  "title": "Operational Dashboard",
-  "welcome": "Welcome back, {name}",
+  "title": "Dashboard",
+  "welcome": "Welcome back! Here's what's happening today.",
+  "welcome1": "Welcome back! Ready to serve up some great moments? ✨",
+  "welcome2": "Hello! Great to see you again. Let's make today amazing! 🚀",
+  "welcome3": "Hey there! Teras Lmbur is ready for action today! ☕️",
+  "welcome4": "Hello Partner! Here is a summary of our exciting updates today.",
+  "welcome5": "Rise and shine! Let's check on Teras Lmbur's growth today. 📈",
   "metrics": {
-    "sales": "Net Sales",
-    "orders": "Total Orders",
-    "activeTables": "Active Tables",
-    "lowStock": "Low Stock Items"
+    "revenue": "Revenue",
+    "orders": "Orders",
+    "kitchenQueue": "Kitchen Queue",
+    "todaysProfit": "Today's Profit",
+    "vsLastWeek": "vs last week",
+    "vsYesterday": "vs yesterday",
+    "avgWait": "avg wait {minutes}m"
   },
   "sections": {
-    "recentOrders": "Recent Floor Orders",
-    "topProducts": "Popular Items Sold"
+    "recentOrders": "Recent Orders",
+    "bestSellers": "Best Sellers",
+    "lowStockAlert": "Low Stock Alert"
+  },
+  "labels": {
+    "viewAll": "View all",
+    "items": "{count} items",
+    "sold": "{count} sold",
+    "minStock": "Min: {min} {unit}",
+    "timeAgo": "{time} ago"
   }
 }

@@ -1,0 +1,20 @@
+{
+  "title": "Analitik & Kecerdasan Bisnis",
+  "description": "Pelacakan kecerdasan bisnis dan performa operasional secara real-time.",
+  "liveSync": "SINKRONISASI LIVE",
+  "refresh": "Muat Ulang",
+  "hourlyDistribution": "Distribusi Pesanan Jam Operasional",
+  "hourlySubtitle": "Tren volume pesanan hari ini dari 08:00 - 22:00",
+  "peakHourToday": "Peak Jam Hari Ini",
+  "recommendationTitle": "Rekomendasi Kapasitas Dapur",
+  "recommendationDesc": "Jam sibuk puncak terdeteksi pada pukul {peakHour}. Pastikan stok bahan baku utama dan staf dapur berada dalam kesiapan penuh sebelum waktu puncak untuk menjaga efisiensi pesanan di atas 90%.",
+  "salesChannelBreakdown": "Pembagian Saluran Penjualan",
+  "noTransactionsToday": "Belum ada transaksi hari ini.",
+  "topCategoryPerformance": "Performa Kategori Teratas",
+  "noCategorySalesToday": "Belum ada penjualan kategori hari ini.",
+  "itemsSold": "{count} item terjual",
+  "ordersCount": "{count} order",
+  "errorTitle": "Gagal Memuat Analytics Real-time",
+  "errorDesc": "Gagal terhubung dengan server backend analytics.",
+  "retry": "Coba Lagi Connection"
+}

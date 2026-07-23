@@ -1,0 +1,35 @@
+{
+  "title": "Satuan Ukuran",
+  "entityName": "Satuan",
+  "description": "Konfigurasikan satuan metrik standar yang digunakan untuk inventaris dan perhitungan resep.",
+  "add": "Tambah Satuan",
+  "edit": "Ubah Satuan",
+  "delete": "Hapus Satuan",
+  "deleteConfirm": "Apakah Anda yakin ingin menghapus satuan ini? Tindakan ini tidak dapat dibatalkan.",
+  "fields": {
+    "name": "Nama Satuan",
+    "abbreviation": "Singkatan",
+    "type": "Jenis Satuan",
+    "usage": "Penggunaan",
+    "usedInItems": "{count} Terkait",
+    "inUseWarning": "Perhatian: Satuan ini digunakan pada {count} bahan baku / resep."
+  },
+  "types": {
+    "WEIGHT": "Berat",
+    "VOLUME": "Volume",
+    "COUNT": "Jumlah / Pcs",
+    "PACK": "Pak / Box"
+  },
+  "placeholders": {
+    "name": "mis. Kilogram",
+    "abbreviation": "mis. kg",
+    "type": "Pilih Jenis"
+  },
+  "validation": {
+    "name": "Nama wajib diisi",
+    "abbreviation": "Singkatan wajib diisi",
+    "type": "Jenis wajib diisi"
+  },
+  "noUnits": "Satuan tidak ditemukan",
+  "noUnitsDesc": "Mulai dengan menambahkan satuan ukuran pertama Anda."
+}

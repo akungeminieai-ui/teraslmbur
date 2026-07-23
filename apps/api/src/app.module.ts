@@ -16,7 +16,11 @@ import { EventBusModule } from './modules/system/event-bus/event-bus.module';
 import { NotificationModule } from './modules/system/notification/notification.module';
 import { StorageModule } from './modules/system/storage/storage.module';
 import { FeatureFlagModule } from './modules/system/feature-flag/feature-flag.module';
+import { UserModule } from './modules/system/user/user.module';
 import { RequestContextService } from './modules/system/context/request-context.service';
+import { MasterModule } from './modules/master/master.module';
+import { OperationsModule } from './modules/operations/operations.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -51,6 +55,7 @@ import configuration from './config/configuration';
     }),
     PrismaModule,
     AuthModule,
+    UserModule,
     QueueModule,
     AuditModule,
     SequenceModule,
@@ -64,6 +69,9 @@ import configuration from './config/configuration';
     NotificationModule,
     StorageModule,
     FeatureFlagModule,
+    MasterModule,
+    OperationsModule,
+    AnalyticsModule,
   ],
 })
 export class AppModule {}
