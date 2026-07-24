@@ -1,4 +1,4 @@
-import { Product, ProductTranslation, ProductStatus, ProductAvailability, SalesChannel, ProductSalesChannel, ProductAvailabilitySchedule, ProductNutrition, ProductTag, ProductAttribute, ProductMedia } from '@prisma/client';
+import { Product, ProductTranslation, ProductStatus, ProductAvailability, SalesChannel, ProductSalesChannel, ProductAvailabilitySchedule, ProductNutrition, ProductTag, ProductAttribute, ProductMedia } from '@/generated/client';
 
 export interface IProductRepository {
   create(data: {

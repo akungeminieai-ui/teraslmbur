@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { IModifierRepository } from '../domain/modifier.repository.interface';
-import { ModifierGroup, ModifierGroupTranslation, ModifierOption, ModifierOptionTranslation } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { ModifierGroup, ModifierGroupTranslation, ModifierOption, ModifierOptionTranslation } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class PrismaModifierRepository implements IModifierRepository {

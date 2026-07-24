@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { IVariantRepository } from '../domain/variant.repository.interface';
-import { VariantGroup, VariantGroupTranslation, VariantOption, VariantOptionTranslation } from '@prisma/client';
+import { VariantGroup, VariantGroupTranslation, VariantOption, VariantOptionTranslation } from '@/generated/client';
 
 @Injectable()
 export class PrismaVariantRepository implements IVariantRepository {

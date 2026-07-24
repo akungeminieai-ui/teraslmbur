@@ -5,7 +5,7 @@ import { EventBusService } from '../../../system/event-bus/event-bus.service';
 import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category, CategoryTranslation } from '@prisma/client';
+import { Category, CategoryTranslation } from '@/generated/client';
 
 @Injectable()
 export class CategoryService {

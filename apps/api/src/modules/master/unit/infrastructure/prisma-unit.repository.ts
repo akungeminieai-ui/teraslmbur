@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { IUnitRepository } from '../domain/unit.repository.interface';
-import { Unit, UnitType } from '@prisma/client';
+import { Unit, UnitType } from '@/generated/client';
 
 @Injectable()
 export class PrismaUnitRepository implements IUnitRepository {

@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { UnitType } from '@prisma/client';
+import { UnitType } from '@/generated/client';
 import { z } from 'zod';
 
 export class UpdateUnitDto {

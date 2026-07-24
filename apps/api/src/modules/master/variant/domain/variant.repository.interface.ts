@@ -1,4 +1,4 @@
-import { VariantGroup, VariantGroupTranslation, VariantOption, VariantOptionTranslation } from '@prisma/client';
+import { VariantGroup, VariantGroupTranslation, VariantOption, VariantOptionTranslation } from '@/generated/client';
 
 export interface IVariantRepository {
   create(data: {

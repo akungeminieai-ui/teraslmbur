@@ -14,8 +14,25 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 
   // Enable CORS
+  const configuredOrigins = (process.env['CORS_ORIGIN'] ?? '')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+
   app.enableCors({
-    origin: process.env['CORS_ORIGIN'] ?? 'http://localhost:3000',
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      if (
+        !origin ||
+        origin.startsWith('http://localhost') ||
+        origin.startsWith('http://127.0.0.1') ||
+        configuredOrigins.includes(origin) ||
+        origin.includes('vercel.app')
+      ) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
   });
 

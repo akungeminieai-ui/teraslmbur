@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { IIngredientRepository } from '../domain/ingredient.repository.interface';
-import { Ingredient, IngredientTranslation } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Ingredient, IngredientTranslation } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class PrismaIngredientRepository implements IIngredientRepository {

@@ -5,7 +5,7 @@ import { EventBusService } from '../../../system/event-bus/event-bus.service';
 import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateUnitDto } from './dto/create-unit.dto';
 import { UpdateUnitDto } from './dto/update-unit.dto';
-import { Unit } from '@prisma/client';
+import { Unit } from '@/generated/client';
 
 @Injectable()
 export class UnitService {

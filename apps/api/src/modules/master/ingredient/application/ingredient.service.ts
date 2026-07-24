@@ -6,8 +6,8 @@ import { EventBusService } from '../../../system/event-bus/event-bus.service';
 import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
-import { Ingredient, IngredientTranslation } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Ingredient, IngredientTranslation } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class IngredientService {

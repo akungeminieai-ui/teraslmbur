@@ -1,4 +1,4 @@
-import { Sale, SaleItem, Product, ProductTranslation } from '@prisma/client';
+import { Sale, SaleItem, Product, ProductTranslation } from '@/generated/client';
 
 export type SaleWithItems = Sale & {
   items: (SaleItem & {

@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ProductStatus, ProductAvailability, SalesChannel } from '@prisma/client';
+import { ProductStatus, ProductAvailability, SalesChannel } from '@/generated/client';
 import { z } from 'zod';
 import { ProductTranslationDto, ProductScheduleDto, ProductNutritionDto, ProductAttributeDto, ProductMediaDto, ProductVariantDto } from './create-product.dto';
 

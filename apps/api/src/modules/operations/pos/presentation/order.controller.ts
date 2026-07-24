@@ -5,8 +5,8 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { PrismaService } from '@/prisma/prisma.service';
 import { SequenceService } from '../../../system/sequence/sequence.service';
-import { OrderType, OrderStatus, TableStatus, KitchenTicketStatus, InventoryTxType } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { OrderType, OrderStatus, TableStatus, KitchenTicketStatus, InventoryTxType } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @ApiTags('Orders')
 @ApiBearerAuth('JWT-auth')

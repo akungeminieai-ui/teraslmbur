@@ -1,4 +1,4 @@
-import { Unit, UnitType } from '@prisma/client';
+import { Unit, UnitType } from '@/generated/client';
 
 export interface IUnitRepository {
   create(data: { name: string; abbreviation: string; type: UnitType }): Promise<Unit>;

@@ -1,4 +1,4 @@
-import { Ingredient, IngredientTranslation } from '@prisma/client';
+import { Ingredient, IngredientTranslation } from '@/generated/client';
 
 export interface IIngredientRepository {
   create(data: {

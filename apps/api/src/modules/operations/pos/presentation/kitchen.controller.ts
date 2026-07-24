@@ -3,7 +3,7 @@ import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { PermissionsGuard } from '@/common/guards/permissions.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { PrismaService } from '@/prisma/prisma.service';
-import { KitchenTicketStatus, OrderStatus, TableStatus } from '@prisma/client';
+import { KitchenTicketStatus, OrderStatus, TableStatus } from '@/generated/client';
 
 @ApiTags('Kitchen')
 @ApiBearerAuth('JWT-auth')

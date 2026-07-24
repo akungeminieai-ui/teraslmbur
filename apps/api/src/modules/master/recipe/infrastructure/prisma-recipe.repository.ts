@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/prisma/prisma.service';
 import { IRecipeRepository, RecipeWithItems } from '../domain/recipe.repository.interface';
-import { Recipe } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Recipe } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 const RECIPE_INCLUDE = {
   items: {

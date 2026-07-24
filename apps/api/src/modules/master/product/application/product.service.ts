@@ -6,8 +6,8 @@ import { EventBusService } from '../../../system/event-bus/event-bus.service';
 import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product, ProductTranslation, ProductStatus } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Product, ProductTranslation, ProductStatus } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class ProductService {

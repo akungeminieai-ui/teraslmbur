@@ -1,4 +1,4 @@
-import { Recipe, RecipeItem, Ingredient, IngredientTranslation } from '@prisma/client';
+import { Recipe, RecipeItem, Ingredient, IngredientTranslation } from '@/generated/client';
 
 export type RecipeWithItems = Recipe & {
   items: (RecipeItem & {

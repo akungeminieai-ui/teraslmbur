@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Patch, Body, Param, Query, BadRequestException, NotFoundException } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Prisma, OrderType, OrderStatus, KitchenTicketStatus, InventoryTxType, TableStatus } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Prisma, OrderType, OrderStatus, KitchenTicketStatus, InventoryTxType, TableStatus } from '@/generated/client';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @ApiTags('Public Order')
 @Controller('public')

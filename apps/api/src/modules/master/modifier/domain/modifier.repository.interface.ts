@@ -1,4 +1,4 @@
-import { ModifierGroup, ModifierGroupTranslation, ModifierOption, ModifierOptionTranslation } from '@prisma/client';
+import { ModifierGroup, ModifierGroupTranslation, ModifierOption, ModifierOptionTranslation } from '@/generated/client';
 
 export interface IModifierRepository {
   create(data: {

@@ -1,4 +1,4 @@
-import { Category, CategoryTranslation } from '@prisma/client';
+import { Category, CategoryTranslation } from '@/generated/client';
 
 export interface ICategoryRepository {
   create(data: {

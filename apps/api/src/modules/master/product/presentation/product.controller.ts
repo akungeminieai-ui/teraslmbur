@@ -8,7 +8,7 @@ import { PermissionsGuard } from '@/common/guards/permissions.guard';
 import { RequirePermissions } from '@/common/decorators/permissions.decorator';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { ProductStatus, SalesChannel } from '@prisma/client';
+import { ProductStatus, SalesChannel } from '@/generated/client';
 
 @ApiTags('Products')
 @ApiBearerAuth('JWT-auth')
