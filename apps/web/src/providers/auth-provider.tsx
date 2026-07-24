@@ -31,44 +31,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const path = '/' + segments.slice(2).join('/');
 
   useEffect(() => {
-    setTimeout(() => {
-      setMounted(true);
-    }, 0);
+    setMounted(true);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
 
-    // Validate token and synchronize state with /auth/me on startup
     const accessToken = localStorage.getItem('accessToken');
     const profile = localStorage.getItem('userProfile');
 
-    if (accessToken) {
+    if (accessToken && profile) {
+      // Instantly load cached profile — UI renders immediately
+      try {
+        const cached = JSON.parse(profile);
+        setUser(cached);
+      } catch {
+        // Ignore parse error
+      }
+      setLoading(false);
+
+      // Background-validate with /auth/me (non-blocking)
       apiClient.get<any>('/auth/me')
         .then((updatedProfile) => {
           setUser(updatedProfile);
           localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
           localStorage.setItem('userPermissions', JSON.stringify(updatedProfile.role.permissions));
-          setTimeout(() => {
-            setLoading(false);
-          }, 0);
         })
         .catch(() => {
-          if (profile) {
-            try {
-              setUser(JSON.parse(profile));
-            } catch {
-              localStorage.clear();
-            }
-          }
-          setTimeout(() => {
-            setLoading(false);
-          }, 0);
+          // Keep cached profile on network error
+        });
+    } else if (accessToken && !profile) {
+      // Token exists but no cached profile — must wait for /auth/me
+      apiClient.get<any>('/auth/me')
+        .then((updatedProfile) => {
+          setUser(updatedProfile);
+          localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+          localStorage.setItem('userPermissions', JSON.stringify(updatedProfile.role.permissions));
+        })
+        .catch(() => {
+          localStorage.clear();
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
-      setTimeout(() => {
-        setLoading(false);
-      }, 0);
+      setLoading(false);
     }
 
     // Listen for multi-tab logout and session expiration events
