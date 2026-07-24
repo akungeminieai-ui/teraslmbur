@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nest start --watch",
-    "prebuild": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build",
+    "prebuild": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && prisma generate --schema=prisma/schema.prisma",
     "build": "nest build",
     "start": "nest start",
     "start:prod": "node dist/src/main",
