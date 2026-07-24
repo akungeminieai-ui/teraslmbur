@@ -19,9 +19,16 @@ export class LocalStorageProvider implements StorageProvider {
       this.uploadDir = path.resolve(process.cwd(), 'public/uploads');
     }
 
-    // Ensure upload directory exists
-    if (!fs.existsSync(this.uploadDir)) {
-      fs.mkdirSync(this.uploadDir, { recursive: true });
+    // Ensure upload directory exists safely (falling back to /tmp on serverless read-only filesystems)
+    try {
+      if (!fs.existsSync(this.uploadDir)) {
+        fs.mkdirSync(this.uploadDir, { recursive: true });
+      }
+    } catch (_err) {
+      this.uploadDir = path.resolve('/tmp', 'uploads');
+      if (!fs.existsSync(this.uploadDir)) {
+        fs.mkdirSync(this.uploadDir, { recursive: true });
+      }
     }
   }
 
