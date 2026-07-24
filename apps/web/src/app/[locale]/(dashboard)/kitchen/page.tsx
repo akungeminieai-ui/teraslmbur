@@ -80,7 +80,7 @@ export default function KitchenPage() {
   const { data: tickets = [], isLoading, error } = useQuery<KitchenTicket[]>({
     queryKey: ['kitchen-tickets'],
     queryFn: () => apiClient.get('/kitchen/orders'),
-    refetchInterval: 3000, // Poll every 3 seconds for continuous operational flow
+    refetchInterval: 15000, // Poll every 15 seconds for continuous operational flow
   });
 
   // Poll for tickets sound triggers

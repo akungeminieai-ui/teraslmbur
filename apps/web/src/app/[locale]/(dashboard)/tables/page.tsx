@@ -90,7 +90,6 @@ export default function TablesPage() {
   const { data: tables = [], isLoading } = useQuery<TableData[]>({
     queryKey: ['tables'],
     queryFn: () => apiClient.get('/tables'),
-    refetchInterval: 3000,
   });
 
   const createMutation = useMutation({

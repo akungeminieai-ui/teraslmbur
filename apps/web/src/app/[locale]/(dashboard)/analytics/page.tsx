@@ -66,7 +66,6 @@ export default function AnalyticsPage() {
   const { data, isLoading, error, refetch, isFetching } = useQuery<AnalyticsOverviewData>({
     queryKey: ['analytics-overview', locale],
     queryFn: () => apiClient.get(`/analytics/overview?locale=${locale}`),
-    refetchInterval: 5000,
   });
 
   const metrics = data?.metrics || [];

@@ -133,19 +133,16 @@ export default function PosPage() {
   const { data: products = [], isLoading: isProductsLoading } = useQuery<PosProduct[]>({
     queryKey: ['pos-products', locale],
     queryFn: () => apiClient.get(`/pos/products?locale=${locale}`),
-    refetchInterval: 3000, // Sync stock levels every 3 seconds
   });
 
   const { data: tables = [] } = useQuery<any[]>({
     queryKey: ['tables'],
     queryFn: () => apiClient.get('/tables'),
-    refetchInterval: 3000, // Poll tables status every 3 seconds
   });
 
   const { data: ordersData, isLoading: isOrdersLoading, refetch: refetchOrders } = useQuery<any>({
     queryKey: ['orders'],
     queryFn: () => apiClient.get('/orders?page=1&pageSize=20'),
-    refetchInterval: 3000, // Poll recent orders feed every 3 seconds
   });
 
   const allQueueOrders = React.useMemo(() => ordersData?.items || [], [ordersData]);

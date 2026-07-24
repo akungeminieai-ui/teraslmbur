@@ -38,14 +38,12 @@ export default function DashboardPage() {
   const { data: dashboardData, isLoading, refetch } = useQuery<any>({
     queryKey: ['dashboard-stats-os', locale],
     queryFn: () => apiClient.get(`/analytics/dashboard?locale=${locale}`),
-    refetchInterval: 5000, // Sync every 5 seconds
   });
 
   // Fetch tables list for occupied stat
   const { data: tablesData = [] } = useQuery<any[]>({
     queryKey: ['tables-dashboard'],
     queryFn: () => apiClient.get('/tables'),
-    refetchInterval: 5000,
   });
 
   const occupiedTables = React.useMemo(() => {

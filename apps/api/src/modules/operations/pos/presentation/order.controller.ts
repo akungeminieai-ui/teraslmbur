@@ -185,7 +185,8 @@ export class OrderController {
             });
             const currentStock = (stockAggregate._sum.quantity || new Decimal(0)).sub(alreadyPlanned);
 
-            if (currentStock.lt(requiredQty)) {
+            const allowNegative = (body as any).strictStock !== true; // default true for smooth POS checkout
+            if (currentStock.lt(requiredQty) && !allowNegative) {
               // Retrieve ingredient details for error message
               const ingredient = await tx.ingredient.findUnique({
                 where: { id: recipeItem.ingredientId },
@@ -305,15 +306,16 @@ export class OrderController {
       );
 
       if (body.isPaid !== false) {
+        const payMethodCode = (body.paymentMethod || 'CASH').toUpperCase();
         // Resolve or create payment method
         let paymentMethod = await tx.paymentMethod.findUnique({
-          where: { code: body.paymentMethod },
+          where: { code: payMethodCode },
         });
         if (!paymentMethod) {
           paymentMethod = await tx.paymentMethod.create({
             data: {
-              code: body.paymentMethod,
-              type: body.paymentMethod === 'CASH' ? 'CASH' : 'E_WALLET',
+              code: payMethodCode,
+              type: payMethodCode === 'CASH' ? 'CASH' : 'E_WALLET',
               isActive: true,
             },
           });
@@ -656,7 +658,8 @@ export class OrderController {
               });
               const currentStock = (stockAggregate._sum.quantity || new Decimal(0)).sub(alreadyPlanned);
 
-              if (currentStock.lt(requiredQty)) {
+              const allowNegative = (body as any).strictStock !== true;
+              if (currentStock.lt(requiredQty) && !allowNegative) {
                 const ingredient = await tx.ingredient.findUnique({
                   where: { id: recipeItem.ingredientId },
                   include: { translations: true },

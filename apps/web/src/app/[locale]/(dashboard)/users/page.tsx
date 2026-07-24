@@ -125,7 +125,6 @@ export default function UsersPage() {
       if (selectedStatus !== 'ALL') params.append('isActive', selectedStatus);
       return apiClient.get(`/users?${params.toString()}`);
     },
-    refetchInterval: 5000,
   });
 
   // Create/Update Mutation

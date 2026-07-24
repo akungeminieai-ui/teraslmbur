@@ -34,8 +34,6 @@ export default function ReportsPage() {
   // Fetch real-time financial report metrics
   const { data: reportsData, isLoading, error, refetch } = useQuery<Record<Period, FinancialData>>({
     queryKey: ['analytics-reports'],
-    queryFn: () => apiClient.get('/analytics/reports'),
-    refetchInterval: 5000, // Realtime sync every 5s
   });
 
   // Handle focusing on profit breakdown from dashboard

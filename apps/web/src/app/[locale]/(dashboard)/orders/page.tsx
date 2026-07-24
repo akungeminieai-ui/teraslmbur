@@ -106,7 +106,6 @@ export default function OrdersPage() {
       }
       return apiClient.get(`/orders?${params.toString()}`);
     },
-    refetchInterval: 5000, // Sync order states every 5 seconds
   });
 
   // Group orders by localized date string
