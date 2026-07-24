@@ -5,19 +5,12 @@ import { AppModule } from '../dist/src/app.module';
 import { HttpExceptionFilter } from '../dist/src/common/filters/http-exception.filter';
 import { TransformInterceptor } from '../dist/src/common/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../dist/src/common/interceptors/logging.interceptor';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express';
 
-const server = express();
 let cachedServer: any;
 
 async function bootstrapServerless() {
   if (!cachedServer) {
-    const app = await NestFactory.create(
-      AppModule,
-      new ExpressAdapter(server),
-      { bufferLogs: true }
-    );
+    const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
     app.useLogger(app.get(Logger));
 
@@ -56,12 +49,12 @@ async function bootstrapServerless() {
     app.useGlobalInterceptors(new TransformInterceptor(), new LoggingInterceptor());
 
     await app.init();
-    cachedServer = server;
+    cachedServer = app.getHttpAdapter().getInstance();
   }
   return cachedServer;
 }
 
 export default async function handler(req: any, res: any) {
-  const expressApp = await bootstrapServerless();
-  return expressApp(req, res);
+  const server = await bootstrapServerless();
+  return server(req, res);
 }
