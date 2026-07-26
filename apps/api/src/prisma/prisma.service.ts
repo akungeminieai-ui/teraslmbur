@@ -4,11 +4,8 @@ import { PrismaClient } from '../generated/client';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
-    try {
-      await this.$connect();
-    } catch (_err) {
-      // Prisma Client lazily connects on first query
-    }
+    // Non-blocking connection init for sub-100ms serverless cold start
+    this.$connect().catch(() => {});
   }
 
   async onModuleDestroy() {

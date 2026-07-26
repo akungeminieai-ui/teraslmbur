@@ -4,7 +4,7 @@ export const siteConfig = {
   name: 'Teras Lmbur OS',
   description: 'Restaurant Management System — From single outlet to franchise platform',
   url: process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
-  apiUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001',
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app') ? 'https://teras-lmbur-api.vercel.app' : 'http://localhost:3001'),
 } as const;
 
 export const navigationConfig: NavSection[] = [

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && prisma generate --schema=prisma/schema.prisma && mkdir -p dist/src && cp -r src/generated dist/src/generated",
     "dev": "nest start --watch",
     "prebuild": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && prisma generate --schema=prisma/schema.prisma",
     "build": "nest build && cp -r src/generated dist/src/generated",

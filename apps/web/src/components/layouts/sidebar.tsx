@@ -115,6 +115,7 @@ export const Sidebar = React.memo(function Sidebar() {
       {/* Logo / Brand */}
       <Link
         href="/dashboard"
+        prefetch={false}
         className={cn(
           'flex h-16 items-center border-b border-[var(--sidebar-border)] px-4 justify-center md:gap-3 cursor-pointer hover:opacity-90 transition-opacity w-full',
           !collapsed && 'md:justify-start',
@@ -193,6 +194,7 @@ export const Sidebar = React.memo(function Sidebar() {
                     <Link
                       key={item.href}
                       href={item.href}
+                      prefetch={false}
                       title={collapsed ? itemTitle : undefined}
                       className={cn(
                         'group relative flex items-center rounded-lg px-2.5 py-2 text-sm font-medium transition-all duration-150',

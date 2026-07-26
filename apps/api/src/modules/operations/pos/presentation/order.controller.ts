@@ -171,34 +171,33 @@ export class OrderController {
         if (recipe && recipe.items.length > 0) {
           for (const recipeItem of recipe.items) {
             const requiredQty = new Decimal(recipeItem.quantity).mul(new Decimal(item.quantity));
-            const alreadyPlanned = plannedDeductions.get(recipeItem.ingredientId) || new Decimal(0);
-
-            // Sum up the current transactions for the ingredient in this outlet
-            const stockAggregate = await tx.inventoryTransaction.aggregate({
-              where: {
-                ingredientId: recipeItem.ingredientId,
-                outletId,
-              },
-              _sum: {
-                quantity: true,
-              },
-            });
-            const currentStock = (stockAggregate._sum.quantity || new Decimal(0)).sub(alreadyPlanned);
-
             const allowNegative = (body as any).strictStock !== true; // default true for smooth POS checkout
-            if (currentStock.lt(requiredQty) && !allowNegative) {
-              // Retrieve ingredient details for error message
-              const ingredient = await tx.ingredient.findUnique({
-                where: { id: recipeItem.ingredientId },
-                include: { translations: true },
+
+            if (!allowNegative) {
+              const alreadyPlanned = plannedDeductions.get(recipeItem.ingredientId) || new Decimal(0);
+              const stockAggregate = await tx.inventoryTransaction.aggregate({
+                where: {
+                  ingredientId: recipeItem.ingredientId,
+                  outletId,
+                },
+                _sum: {
+                  quantity: true,
+                },
               });
-              const ingName = ingredient?.translations.find((t) => t.locale === 'en')?.name || ingredient?.sku || 'Ingredient';
-              throw new BadRequestException(`Insufficient stock for ingredient: ${ingName} (Required: ${requiredQty.toFixed(2)}, Available: ${currentStock.toFixed(2)})`);
+              const currentStock = (stockAggregate._sum.quantity || new Decimal(0)).sub(alreadyPlanned);
+
+              if (currentStock.lt(requiredQty)) {
+                const ingredient = await tx.ingredient.findUnique({
+                  where: { id: recipeItem.ingredientId },
+                  include: { translations: true },
+                });
+                const ingName = ingredient?.translations.find((t) => t.locale === 'en')?.name || ingredient?.sku || 'Ingredient';
+                throw new BadRequestException(`Insufficient stock for ingredient: ${ingName} (Required: ${requiredQty.toFixed(2)}, Available: ${currentStock.toFixed(2)})`);
+              }
+              plannedDeductions.set(recipeItem.ingredientId, alreadyPlanned.add(requiredQty));
             }
 
-            const resolvedUnitId = recipeItem.unitId || await ingredientIdToUnitId(tx, recipeItem.ingredientId);
-
-            plannedDeductions.set(recipeItem.ingredientId, alreadyPlanned.add(requiredQty));
+            const resolvedUnitId = recipeItem.unitId || 'default-unit';
 
             inventoryTransactionsToCreate.push({
               ingredientId: recipeItem.ingredientId,
@@ -378,7 +377,7 @@ export class OrderController {
       });
 
       return order;
-    });
+    }, { timeout: 30000, maxWait: 10000 });
   }
 
   @Get()

@@ -2,7 +2,7 @@
 'use client';
 
 import * as React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLocale } from 'next-intl';
 import { apiClient } from '@/lib/api-client';
 import { useRouter } from '@/i18n/routing';
@@ -33,6 +33,16 @@ export default function DashboardPage() {
   const router = useRouter();
   const { user } = useAuth();
   const toast = useAppToast();
+  const queryClient = useQueryClient();
+
+  // Background-prefetch key master data so sidebar page clicks load in 0ms instantly
+  React.useEffect(() => {
+    queryClient.prefetchQuery({ queryKey: ['pos-products'], queryFn: () => apiClient.get('/products') });
+    queryClient.prefetchQuery({ queryKey: ['pos-categories'], queryFn: () => apiClient.get('/categories') });
+    queryClient.prefetchQuery({ queryKey: ['tables-page'], queryFn: () => apiClient.get('/tables') });
+    queryClient.prefetchQuery({ queryKey: ['orders-page'], queryFn: () => apiClient.get('/orders') });
+    queryClient.prefetchQuery({ queryKey: ['kitchen-orders'], queryFn: () => apiClient.get('/orders?status=KITCHEN') });
+  }, [queryClient]);
 
   // Fetch real-time dashboard data
   const { data: dashboardData, isLoading, refetch } = useQuery<any>({
