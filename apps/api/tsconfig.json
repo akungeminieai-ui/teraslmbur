@@ -1,6 +1,8 @@
 {
   "extends": "@teras-lmbur/config/typescript/nest.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
