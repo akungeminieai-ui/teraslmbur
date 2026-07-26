@@ -7,7 +7,7 @@ import { EventBusService } from '../../../system/event-bus/event-bus.service';
 import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateSaleDto } from './dto/create-sale.dto';
 import { SaleWithItems } from '../domain/pos.repository.interface';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class PosService {

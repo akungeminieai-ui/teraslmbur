@@ -4,7 +4,7 @@ import { PermissionsGuard } from '@/common/guards/permissions.guard';
 import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { PrismaService } from '@/prisma/prisma.service';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @ApiTags('Shifts')
 @ApiBearerAuth('JWT-auth')

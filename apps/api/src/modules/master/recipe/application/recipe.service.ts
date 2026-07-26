@@ -7,7 +7,7 @@ import { BaseDomainEvent } from '../../../system/event-bus/base-domain-event';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { RecipeWithItems } from '../domain/recipe.repository.interface';
-import { Decimal } from '@prisma/client/runtime/library';
+import { Decimal } from '@/generated/client/runtime/library';
 
 @Injectable()
 export class RecipeService {
