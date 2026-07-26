@@ -6,7 +6,7 @@
     "predev": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && prisma generate --schema=prisma/schema.prisma && mkdir -p dist/src && cp -r src/generated dist/src/generated",
     "dev": "nest start --watch",
     "prebuild": "pnpm --filter \"@teras-lmbur/types\" build && pnpm --filter \"@teras-lmbur/utils\" build && prisma generate --schema=prisma/schema.prisma",
-    "build": "nest build && cp -r src/generated dist/src/generated",
+    "build": "nest build && mkdir -p dist/src && cp -r src/generated dist/src/generated",
     "start": "nest start",
     "start:prod": "node dist/src/main",
     "lint": "eslint src/",
