@@ -33,7 +33,7 @@ import configuration from './config/configuration';
     }),
     // Structured Pino Logger module
     LoggerModule.forRoot({
-      pinoHttp: {
+      pinoHttp: ({
         transport:
           process.env['NODE_ENV'] !== 'production'
             ? { target: 'pino-pretty', options: { colorize: true } }
@@ -51,7 +51,7 @@ import configuration from './config/configuration';
             businessDate: store?.businessDate,
           };
         },
-      },
+      } as any),
     }),
     PrismaModule,
     AuthModule,

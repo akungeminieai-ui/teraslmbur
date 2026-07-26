@@ -1,12 +1,18 @@
 {
   "extends": "@teras-lmbur/config/typescript/nest.json",
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"],
+      "@teras-lmbur/types": ["../../packages/types/src/index.ts"],
+      "@teras-lmbur/utils": ["../../packages/utils/src/index.ts"],
       "@prisma/client": ["src/generated/client"],
       "@prisma/client/*": ["src/generated/client/*"]
     }
