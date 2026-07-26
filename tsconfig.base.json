@@ -16,9 +16,11 @@
     "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "composite": false,
-    "incremental": true
+    "baseUrl": ".",
+    "paths": {
+      "@teras-lmbur/types": ["packages/types/src/index.ts"],
+      "@teras-lmbur/utils": ["packages/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "dist", ".next", ".turbo"]
 }
