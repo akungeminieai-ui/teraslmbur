@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { VersioningType, RequestMethod } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
-import { AppModule } from '../dist/src/app.module';
-import { HttpExceptionFilter } from '../dist/src/common/filters/http-exception.filter';
-import { TransformInterceptor } from '../dist/src/common/interceptors/transform.interceptor';
-import { LoggingInterceptor } from '../dist/src/common/interceptors/logging.interceptor';
+import { AppModule } from '../src/app.module';
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
+import { TransformInterceptor } from '../src/common/interceptors/transform.interceptor';
+import { LoggingInterceptor } from '../src/common/interceptors/logging.interceptor';
 
 let cachedServer: any;
 
